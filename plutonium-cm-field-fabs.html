@@ -1,0 +1,91 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-material/paper-material.html">
+<link rel="import" href="../paper-card/paper-card.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="plutonium-cm-behavior.html">
+<!--<link rel="import" href="plutonium-youtube-url-input.html">-->
+
+<!--
+An element providing a solution to no problem in particular.
+
+Example:
+
+    <plutonium-cm-field-fabs></plutonium-cm-field-fabs>
+
+Example:
+
+    <plutonium-cm-field-fabs>
+      <h2>Hello plutonium-cm-field-fabs</h2>
+    </plutonium-cm-field-fabs>
+
+@demo demo/index.html
+@hero hero.svg
+-->
+
+<dom-module id="plutonium-cm-field-fabs">
+    <link rel="import" type="css" href="plutonium-cm.css">
+    <template>
+
+        <style>
+
+            :host > div.cm-fab {
+                @apply(--layout-vertical);
+                @apply(--layout-centered);
+            }
+
+            #plutonium-cm-actions {
+                display: var(--plutonium-cm-actions-display);
+                margin-left: 20px;
+
+            }
+
+        </style>
+        <div class="cm-fab">
+            <paper-icon-button on-click="onMoveUpSection" icon="expand-less" raised></paper-icon-button>
+            <paper-icon-button on-click="onAddSection" icon="add-circle" title="Embedd video to the message content."></paper-icon-button>
+            <paper-icon-button on-click="onEmbedVideo" icon="theaters" title="Embedd video to the message content."></paper-icon-button>
+            <paper-icon-button on-click="onEmbedImage" icon="perm-media" title="Embedd image to the message content."></paper-icon-button>
+            <paper-icon-button on-click="onEmbedLink" icon="link" title="Embedd a link to another message to the message content."></paper-icon-button>
+            <paper-icon-button on-click="onShowEditor" icon="create" raised></paper-icon-button>
+            <paper-icon-button on-click="onRemoveSection" icon="delete" title="{{removeTitle}}"></paper-icon-button>
+            <paper-icon-button on-click="onMoveDownSection" icon="expand-more" raised></paper-icon-button>
+        </div>
+    </template>
+
+    <script>
+        (function () {
+            'use strict';
+            Polymer({
+                is: 'plutonium-cm-field-fabs',
+                behaviors: [PlutoniumBehaviors.CmBehavior],
+                properties: {
+                },
+                // Element Lifecycle
+
+                ready: function () {
+                    console.log('plutonium-cm-field-fabs[' + this.key + '] is ready.');
+                },
+                attached: function () {
+                    console.log('plutonium-cm-field-fabs[' + this.key + '] is attached.');
+                },
+                detached: function () {
+                    console.log('plutonium-cm-field-fabs[] is detached.');
+                }
+            });
+        })();
+    </script>
+</dom-module>

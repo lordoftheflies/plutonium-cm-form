@@ -1,0 +1,55 @@
+{
+    "elements": {
+        "template": {},
+        "paper-dialog": {
+            "attributes": {
+                "id": {},
+                "class": {}
+            }
+        },
+        "paper-icon-button": {
+            "attributes": {
+                "on-click": {},
+                "icon": {},
+                "raised": {},
+                "title": {}
+            }
+        },
+        "paper-button": {
+            "attributes": {
+                "dialog-dismiss": {},
+                "dialog-confirm": {}
+            }
+        },
+        "dom-module": {},
+        "paper-material": {
+            "attributes": {
+                "elevation": {},
+                "id": {},
+                "class": {}
+            }
+        },
+        "paper-card": {
+            "attributes": {
+                "elevation": {},
+                "on-mouseout": {},
+                "on-mouseover": {}
+            }
+        },
+        "plutonium-cm-field-fabs": {},
+        "paper-textarea": {
+            "attributes": {
+                "label": {}
+            }
+        },
+        "paper-input": {
+            "attributes": {
+                "auto-validate": {},
+                "label": {},
+                "required": {}
+            }
+        },
+        "content": {}
+    },
+    "attributes": {}
+}

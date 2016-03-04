@@ -9,40 +9,70 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <title>seed-element Demo</title>
-    <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
-    <link rel="import" href="../seed-element.html">
-  </head>
-  <body unresolved>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+        <title>plutonium-form Demo</title>
+        <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+        <link rel="import" href="../../paper-button/paper-button.html">
+        <link rel="import" href="../../paper-dialog/paper-dialog.html">
+        <link rel="import" href="../../google-youtube/google-youtube.html">
+        <link rel="import" href="../../iron-ajax/iron-ajax.html">
+        <link rel="import" href="../plutonium-form.html">
+        <link rel="import" href="../plutonium-cm-field.html">
+        <link rel="import" href="../plutonium-cm-text.html">
+        <link rel="import" href="../plutonium-cm-image.html">
+        <link rel="import" href="../plutonium-cm-link.html">
+        <link rel="import" href="../plutonium-cm-video.html">
+        <link rel="import" href="../plutonium-cm-section.html">
+    </head>
+    <body unresolved>
 
-    <p>An example of <code>&lt;seed-element&gt;</code>:</p>
+        <template is="dom-bind" id="app">
+            <iron-ajax url="./sample-data/classification.json" last-response="{{classification}}" auto></iron-ajax>
+            <iron-ajax url="./sample-data/model.json" last-response="{{model}}" auto></iron-ajax>
+            <h2>Content editor</h2>
+            <plutonium-form style="width: 100%"
+                            classification="{{classification}}" fancy>
+                <!--        <plutonium-cm-video title="Video example" name="first" dialog-id="video-editor-dialog" data="Si4BM7QOWXI">
+                            
+                        </plutonium-cm-video>
+                        <plutonium-cm-text title="Text example" name="second" dialog-id="video-editor-dialog" data="Si4BM7QOWXI">
+                            
+                        </plutonium-cm-text>
+-->                        <plutonium-cm-field title="Field example" name="third" dialog-id="video-editor-dialog" data="Si4BM7QOWXI">
+                            adasdadaadada
+                        </plutonium-cm-field><!--
+                        <plutonium-cm-image title="Image example" name="fourth" dialog-id="video-editor-dialog" data="https://www.google.hu/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&ved=0ahUKEwjGifff4qXLAhWFNpoKHX4XBssQjRwIBw&url=http%3A%2F%2Fwww.trademagazin.hu%2Fhirek-es-cikkek%2Fpiaci-hirek%2Fszeretjuk-a-kacsahust.html&psig=AFQjCNHKGebKo-p4MfAbQfxvxMKMgTF_jg&ust=1457137611971834">
+                            
+                        </plutonium-cm-image>
+                        <plutonium-cm-video title="Video example 2" name="fifth" dialog-id="video-editor-dialog" data="Si4BM7QOWXI">
+                            
+                        </plutonium-cm-video>-->
+            </plutonium-form>
+            <h2>Content display</h2>
+            <plutonium-cm-section classification="{{classification}}">
+                
+            </plutonium-cm-section>
+        </template>
+        <script>
 
-    <p>Make words! <button id="saybtn">Say Something</button></p>
-    <p>Make lasers! <button id="laserbtn">Fire lasers</button></p>
 
-    <seed-element author='{"name": "Lord Meowser", "image": "http://lorempixel.com/g/300/200/cats/"}' fancy>
-      <h2>Hello seed-element</h2>
-    </seed-element>
+    var formElement = document.querySelector('plutonium-form');
 
-    <script>
-      var seedElement = document.querySelector('seed-element');
+    //        document.querySelector('#saybtn').addEventListener('click', function () {
+    //            alert(formElement.sayHello('Hallo!'));
+    //        });
+    //
+    //        document.querySelector('#laserbtn').addEventListener('click', function () {
+    //            formElement.fireLasers();
+    //        });
+    //
+    //        document.addEventListener("plutonium-form-lasers", function (e) {
+    //            console.log(e.detail.sound);
+    //        });
 
-      document.querySelector('#saybtn').addEventListener('click', function() {
-        alert(seedElement.sayHello('Hallo!'));
-      });
+        </script>
 
-      document.querySelector('#laserbtn').addEventListener('click', function() {
-        seedElement.fireLasers();
-      });
-
-      document.addEventListener("seed-element-lasers", function(e) {
-        console.log(e.detail.sound);
-      });
-
-    </script>
-
-  </body>
+    </body>
 </html>

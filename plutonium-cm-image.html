@@ -1,0 +1,188 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-material/paper-material.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-image/iron-image.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="plutonium-cm-behavior.html">
+<link rel="import" href="plutonium-cm-field-fabs.html">
+<!--<link rel="import" href="plutonium-youtube-url-input.html">-->
+
+<!--
+An element providing a solution to no problem in particular.
+
+Example:
+
+    <plutonium-cm-image></plutonium-cm-image>
+
+Example:
+
+    <plutonium-cm-image>
+      <h2>Hello plutonium-cm-image</h2>
+    </plutonium-cm-image>
+
+@demo demo/index.html
+@hero hero.svg
+-->
+
+<dom-module id="plutonium-cm-image">
+    <template>
+        <style>
+            :host {
+                display: inline-block;
+                @apply(--layout-horizontal);
+                --plutonium-cm-actions-display: none !important;
+            }
+
+            :host > div {
+                display: block;
+                @apply(--layout-horizontal);
+            }
+
+            :host paper-card,
+            :host paper-material {
+                background-color: white;
+                display: inline-block;
+            }
+            :host paper-card {
+                @apply(--layout-horizontal);
+                @apply(--layout-flex);
+            }
+            .cm-fab {
+                @apply(--layout-vertical);
+                @apply(--layout-centered);
+            }
+
+            #plutonium-cm-actions {
+                display: var(--plutonium-cm-actions-display);
+                margin-left: 20px;
+
+            }
+
+        </style>
+
+        <template is="dom-if" if="{{!sectionDisplay}}">
+
+
+            <!--<div>-->
+            <paper-dialog id="video-editor-dialog" class="editor">
+                <h2>Edit video properties</h2>
+                <div class="content">
+                    <paper-input required auto-validate
+                                 label='Video url'
+                                 value$='{{url}}'
+                                 error-message='Invalid Youtube url.'>
+
+                </paper-input>
+            </div>
+            <div class="buttons">
+                <paper-button dialog-dismiss>Cancel</paper-button>
+                <paper-button dialog-confirm>Accept</paper-button>
+            </div>
+        </paper-dialog>
+
+        <paper-card elevation="1" heading$="{{title}}">
+                    <iron-image src$="{{data}}"></iron-image>
+        </paper-card>
+
+        <paper-material elevation="1" id="plutonium-cm-actions">
+            <plutonium-cm-field-fabs></plutonium-cm-field-fabs>
+        </paper-material>
+        <!--</div>-->
+    </template>
+    <template is="dom-if" if="{{sectionDisplay}}">
+        <iron-image src$="{{data}}"></iron-image>
+    </template>
+</template>
+
+<script>
+    (function () {
+        'use strict';
+        Polymer({
+            is: 'plutonium-cm-image',
+            behaviors: [PlutoniumBehaviors.CmBehavior],
+            properties: {
+            },
+            listeners: {
+                'removeSection': 'removeSection',
+            },
+            // Element Lifecycle
+
+            ready: function () {
+                console.log('plutonium-cm-image[' + this.key + '] is ready.');
+                console.log('\tstate: ' + (this.inlineEditor === true ? 'inline' : 'dialog') + ', ' + (this._edited === true ? 'editor' : 'preview'));
+                // `ready` is called after all elements have been configured, but
+                // propagates bottom-up. This element's children are ready, but parents
+                // are not.
+                //
+                // This is the point where you should make modifications to the DOM (when
+                // necessary), or kick off any processes the element wants to perform.
+            },
+            attached: function () {
+                console.log('plutonium-cm-image[' + this.key + '] is attached.');
+
+                // `attached` fires once the element and its parents have been inserted
+                // into a document.
+                //
+                // This is a good place to perform any work related to your element's
+                // visual state or active behavior (measuring sizes, beginning animations,
+                // loading resources, etc).
+
+            },
+            detached: function () {
+                console.log('plutonium-cm-image[] is detached.');
+                // The analog to `attached`, `detached` fires when the element has been
+                // removed from a document.
+                //
+                // Use this to clean up anything you did in `attached`.
+            },
+            // Element Behavior
+
+//            removeSection: function () {
+//                console.log('Remove field[' + this.key + ']');
+//            },
+//            showEditor: function (event) {
+//                this._edited = true;
+//                if (this.inlineEditor === false) {
+//                    console.log('Open properties of content in a dialog.');
+//                    document.getElementById(this.dialogId).open();
+//                } else {
+//                    console.log('Show properties of content inline.');
+//                }
+//            },
+//            applyModel: function () {
+//                this._edited = false;
+//                this.fire('applyModel', {
+//                    key: this.key,
+//                    model: this.data
+//                });
+//                console.log('Show preview.');
+//            },
+            observers: [
+                '_extractId(url)',
+                '_computeUrl(data)'
+            ],
+            _extractId: function (url) {
+                this.data = url.split('=')[1];
+                console.log('Change url, new id is ' + this.data);
+            },
+            _computeUrl: function (id) {
+                this.url = 'https://www.youtube.com/watch?v=' + id;
+                console.log('Change id, new url is ' + this.url);
+            }
+        });
+    })();
+</script>
+</dom-module>
