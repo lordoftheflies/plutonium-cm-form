@@ -17,6 +17,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="plutonium-cm-behavior.html">
+
+<link rel="import" href="plutonium-cm-fab-behavior.html">
 <!--<link rel="import" href="plutonium-youtube-url-input.html">-->
 
 <!--
@@ -71,9 +73,7 @@ Example:
             'use strict';
             Polymer({
                 is: 'plutonium-cm-field-fabs',
-                behaviors: [PlutoniumBehaviors.CmBehavior],
-                properties: {
-                },
+                behaviors: [PlutoniumBehaviors.CmFabBehavior],
                 // Element Lifecycle
 
                 ready: function () {

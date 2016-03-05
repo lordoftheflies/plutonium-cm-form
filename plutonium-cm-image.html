@@ -77,11 +77,11 @@ Example:
 
 
             <!--<div>-->
-            <paper-dialog id="video-editor-dialog" class="editor">
-                <h2>Edit video properties</h2>
+            <paper-dialog id="image-editor-dialog" modal class="editor">
+                <h2>Edit image properties</h2>
                 <div class="content">
                     <paper-input required auto-validate
-                                 label='Video url'
+                                 label='Image url'
                                  value$='{{url}}'
                                  error-message='Invalid Youtube url.'>
 
@@ -98,7 +98,7 @@ Example:
         </paper-card>
 
         <paper-material elevation="1" id="plutonium-cm-actions">
-            <plutonium-cm-field-fabs></plutonium-cm-field-fabs>
+            <plutonium-cm-field-fabs name$='{{name}}' dialog-id$='{{dialogId}}'></plutonium-cm-field-fabs>
         </paper-material>
         <!--</div>-->
     </template>

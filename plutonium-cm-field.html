@@ -81,15 +81,13 @@ Example:
             }
 
         </style>
-        <!--        <paper-card on-mouseover='onHovered' on-mouseout='onUnhovered' heading$="{{title}}">-->
-
         <template is="dom-if" if="{{!sectionDisplay}}">
             <paper-card heading$="{{title}}">
                         <content></content>    
             </paper-card>
 
             <paper-material elevation="1" id="plutonium-cm-actions">
-                <plutonium-cm-field-fabs></plutonium-cm-field-fabs>
+                <plutonium-cm-field-fabs name$='{{name}}' dialog-id$='{{dialogId}}'></plutonium-cm-field-fabs>
             </paper-material>
 
         </template>
@@ -129,7 +127,7 @@ Example:
 
                 },
                 detached: function () {
-                    console.log('plutonium-cm-field[] is detached.');
+                    console.log('plutonium-cm-field[' + this.key + '] is detached.');
                     // The analog to `attached`, `detached` fires when the element has been
                     // removed from a document.
                     //

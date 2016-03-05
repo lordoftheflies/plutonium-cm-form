@@ -44,6 +44,7 @@
         },
         "paper-input": {
             "attributes": {
+                "error-message": {},
                 "auto-validate": {},
                 "label": {},
                 "required": {}

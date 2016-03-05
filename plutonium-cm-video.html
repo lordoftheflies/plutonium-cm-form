@@ -77,37 +77,40 @@ Example:
         <template is="dom-if" if="{{!sectionDisplay}}">
             <!--<div on-mouseover='onHovered' on-mouseout='onUnhovered'>-->
             <!--<div>-->
-            <paper-dialog id="video-editor-dialog" class="editor">
+            <paper-dialog id="video-editor-dialog" modal class="editor">
                 <h2>Edit video properties</h2>
                 <div class="content">
-                    <paper-input required auto-validate
-                                 label='Video url'
-                                 value$='{{url}}'
-                                 error-message='Invalid Youtube url.'>
+                    <paper-input label='Title' value$='{{title}}'>
 
                 </paper-input>
-            </div>
-            <div class="buttons">
-                <paper-button dialog-dismiss>Cancel</paper-button>
-                <paper-button dialog-confirm>Accept</paper-button>
-            </div>
-        </paper-dialog>
+                <paper-input required auto-validate
+                             label='Video url'
+                             error-message='Invalid Youtube url.'
+                             value$='{{url}}'>
 
-        <paper-card elevation="1" heading$="{{title}}">
-                    <google-youtube
-                video-id$='{{data}}'
-                height="270px"
-                width="480px"
-                rel="0"
-                start="5"
-                autoplay="0">
-        </google-youtube>
-    </paper-card>
+            </paper-input>
+        </div>
+        <div class="buttons">
+            <paper-button dialog-dismiss>Cancel</paper-button>
+            <paper-button dialog-confirm on-tap='onAccept'>Accept</paper-button>
+        </div>
+    </paper-dialog>
 
-    <paper-material elevation="1" id="plutonium-cm-actions">
-        <plutonium-cm-field-fabs></plutonium-cm-field-fabs>
-    </paper-material>
-    <!--</div>-->
+    <paper-card elevation="1" heading$='{{title}}'>
+                <google-youtube
+            video-id$='{{data}}'
+            height="270px"
+            width="480px"
+            rel="0"
+            start="5"
+            autoplay="0">
+    </google-youtube>
+</paper-card>
+
+<paper-material elevation="1" id="plutonium-cm-actions">
+    <plutonium-cm-field-fabs   name$='{{name}}' dialog-id$='{{dialogId}}' ></plutonium-cm-field-fabs>
+</paper-material>
+<!--</div>-->
 
 </template>
 <template is="dom-if" if="{{sectionDisplay}}">
@@ -130,6 +133,11 @@ Example:
             is: 'plutonium-cm-video',
             behaviors: [PlutoniumBehaviors.CmBehavior],
             properties: {
+                dialogId: {
+                    type: String,
+                    notify: true,
+                    value: 'video-editor-dialog'
+                }
             },
             listeners: {
                 'removeSection': 'removeSection',
@@ -197,6 +205,22 @@ Example:
             _computeUrl: function (id) {
                 this.url = 'https://www.youtube.com/watch?v=' + id;
                 console.log('Change id, new url is ' + this.url);
+            },
+            onAccept: function () {
+                this._edited = false;
+                this.fire('applyModel', {
+                    key: this.key,
+                    model: this.data
+                });
+                console.log('Show preview: ');
+                console.log('\tdialogId: ' + this.$.videoEditorDialog.dialogId);
+                console.log('\tdialogId: ' + this.dialogId);
+                console.log('\tname: ' + this.name);
+                console.log('\tname: ' + this.name);
+                console.log('\ttitle: ' + this.title);
+                console.log('\ttitle: ' + this.title);
+                console.log('\tdata: ' + this.data);
+                console.log('\tdata: ' + this.data);
             }
         });
     })();

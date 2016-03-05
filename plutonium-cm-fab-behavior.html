@@ -1,0 +1,64 @@
+<script>
+    window.PlutoniumBehaviors = window.PlutoniumBehaviors || {};
+    PlutoniumBehaviors.CmFabBehavior = {
+        properties: {
+            name: {
+                type: String,
+                notify: true
+            },
+            dialogId: {
+                type: String,
+                notify: true
+            },
+            inlineEditor: {
+                type: Boolean,
+                notify: true,
+                value: false
+            }
+        },
+        ready: function () {
+            console.log('PLUTONIUM-CM-FAB ---------------');
+            console.log('\tDialog id: ' + this.dialogId);
+            console.log('\tName: ' + this.name);
+            console.log('\tInline: ' + this.inlineEditor);
+            console.log('--------------------------------');
+        },
+        onRemoveSection: function () {
+            console.log('Remove field[' + this.name + ']');
+            this.fire('remove', {
+                key: this.name
+            });
+        },
+        onShowEditor: function (model) {
+            this._edited = true;
+            this.data = model;
+            if (this.inlineEditor === false) {
+                console.log('Open field[' + this.name + '] editor in a dialog.');
+                Polymer.dom(this).parentNode.parentNode.$$('#' + this.dialogId).open();
+            } else {
+                console.log('Show field[' + this.name + '] editor inline.');
+            }
+        },
+        onAddSection: function () {
+            console.log('Add section after field[' + this.name + ']');
+            this.fire('create', {
+                type: 'plutonium-cm-text'
+            });
+        },
+        onEmbedVideo: function () {
+            console.log('Embed video to after field[' + this.name + ']');
+        },
+        onEmbedImage: function () {
+            console.log('Embed image to after field[' + this.name + ']');
+        },
+        onEmbedLink: function () {
+            console.log('Embed link to after field[' + this.name + ']');
+        },
+        onMoveUpSection: function () {
+            console.log('Move up field[' + this.name + ']');
+        },
+        onMoveDownSection: function () {
+            console.log('Move down field[' + this.name + ']');
+        }
+    };
+</script>
