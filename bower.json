@@ -1,5 +1,5 @@
 {
-  "name": "plutonium-form",
+  "name": "plutonium-cm-form",
   "version": "1.0.0",
   "authors": [
     "lordoftheflies <heglas11@gmail.com>"
@@ -11,9 +11,9 @@
     "plutonium",
     "component"
   ],
-  "main": "plutonium-form.html",
-  "license": "http://lordoftheflies.github.io/plutonium-form/",
-  "homepage": "https://github.com/lordoftheflies/plutonium-form/",
+  "main": "plutonium-cm-form.html",
+  "license": "http://lordoftheflies.github.io/plutonium-cm-form/",
+  "homepage": "https://github.com/lordoftheflies/plutonium-cm-form/",
   "ignore": [
     "/.*",
     "/test/"

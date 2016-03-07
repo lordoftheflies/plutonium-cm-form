@@ -10,14 +10,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-material/paper-material.html">
+<link rel="import" href="../paper-card/paper-card.html">
 <link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-input/paper-textarea.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
-<link rel="import" href="../iron-image/iron-image.html">
 <link rel="import" href="../iron-icon/iron-icon.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../paper-button/paper-button.html">
-<link rel="import" href="plutonium-cm-behavior.html">
+<link rel="import" href="plutonium-cm-editor-behavior.html">
 <link rel="import" href="plutonium-cm-field-fabs.html">
+<link rel="import" href="plutonium-cm-shared-styles.html">
 <!--<link rel="import" href="plutonium-youtube-url-input.html">-->
 
 <!--
@@ -25,19 +27,19 @@ An element providing a solution to no problem in particular.
 
 Example:
 
-    <plutonium-cm-image></plutonium-cm-image>
+    <plutonium-cm-editor-text></plutonium-cm-editor-text>
 
 Example:
 
-    <plutonium-cm-image>
-      <h2>Hello plutonium-cm-image</h2>
-    </plutonium-cm-image>
+    <plutonium-cm-editor-text>
+      <h2>Hello plutonium-cm-editor-text</h2>
+    </plutonium-cm-editor-text>
 
 @demo demo/index.html
 @hero hero.svg
 -->
 
-<dom-module id="plutonium-cm-image">
+<dom-module id="plutonium-cm-editor-text">
     <template>
         <style>
             :host {
@@ -60,6 +62,7 @@ Example:
                 @apply(--layout-horizontal);
                 @apply(--layout-flex);
             }
+
             .cm-fab {
                 @apply(--layout-vertical);
                 @apply(--layout-centered);
@@ -72,16 +75,15 @@ Example:
             }
 
         </style>
-
         <template is="dom-if" if="{{!sectionDisplay}}">
 
-
+            <!--<div on-mouseover='onHovered' on-mouseout='onUnhovered'>-->
             <!--<div>-->
-            <paper-dialog id="image-editor-dialog" modal class="editor">
-                <h2>Edit image properties</h2>
+            <paper-dialog id="video-editor-dialog" class="editor">
+                <h2>Edit video properties</h2>
                 <div class="content">
                     <paper-input required auto-validate
-                                 label='Image url'
+                                 label='Video url'
                                  value$='{{url}}'
                                  error-message='Invalid Youtube url.'>
 
@@ -94,7 +96,7 @@ Example:
         </paper-dialog>
 
         <paper-card elevation="1" heading$="{{title}}">
-                    <iron-image src$="{{data}}"></iron-image>
+                    <paper-textarea label="Text">{{data}}</paper-textarea>
         </paper-card>
 
         <paper-material elevation="1" id="plutonium-cm-actions">
@@ -103,7 +105,7 @@ Example:
         <!--</div>-->
     </template>
     <template is="dom-if" if="{{sectionDisplay}}">
-        <iron-image src$="{{data}}"></iron-image>
+        <p>{{data}}</p>
     </template>
 </template>
 
@@ -111,7 +113,7 @@ Example:
     (function () {
         'use strict';
         Polymer({
-            is: 'plutonium-cm-image',
+            is: 'plutonium-cm-editor-text',
             behaviors: [PlutoniumBehaviors.CmBehavior],
             properties: {
             },
@@ -121,7 +123,7 @@ Example:
             // Element Lifecycle
 
             ready: function () {
-                console.log('plutonium-cm-image[' + this.key + '] is ready.');
+                console.log('plutonium-cm-editor-text[' + this.key + '] is ready.');
                 console.log('\tstate: ' + (this.inlineEditor === true ? 'inline' : 'dialog') + ', ' + (this._edited === true ? 'editor' : 'preview'));
                 // `ready` is called after all elements have been configured, but
                 // propagates bottom-up. This element's children are ready, but parents
@@ -131,8 +133,8 @@ Example:
                 // necessary), or kick off any processes the element wants to perform.
             },
             attached: function () {
-                console.log('plutonium-cm-image[' + this.key + '] is attached.');
-
+                console.log('plutonium-cm-editor-text[' + this.key + '] is attached.');
+                this.inlineEditor = true;
                 // `attached` fires once the element and its parents have been inserted
                 // into a document.
                 //
@@ -142,7 +144,7 @@ Example:
 
             },
             detached: function () {
-                console.log('plutonium-cm-image[] is detached.');
+                console.log('plutonium-cm-editor-text[] is detached.');
                 // The analog to `attached`, `detached` fires when the element has been
                 // removed from a document.
                 //

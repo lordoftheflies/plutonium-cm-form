@@ -12,13 +12,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../paper-material/paper-material.html">
 <link rel="import" href="../paper-card/paper-card.html">
 <link rel="import" href="../paper-input/paper-input.html">
-<link rel="import" href="../paper-input/paper-textarea.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../iron-icon/iron-icon.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../paper-button/paper-button.html">
-<link rel="import" href="plutonium-cm-behavior.html">
+<link rel="import" href="plutonium-cm-editor-behavior.html">
 <link rel="import" href="plutonium-cm-field-fabs.html">
+<link rel="import" href="plutonium-cm-shared-styles.html">
 <!--<link rel="import" href="plutonium-youtube-url-input.html">-->
 
 <!--
@@ -26,25 +26,30 @@ An element providing a solution to no problem in particular.
 
 Example:
 
-    <plutonium-cm-link></plutonium-cm-link>
+    <plutonium-cm-editor-video></plutonium-cm-editor-video>
 
 Example:
 
-    <plutonium-cm-link>
-      <h2>Hello plutonium-cm-link</h2>
-    </plutonium-cm-link>
+    <plutonium-cm-editor-video>
+      <h2>Hello plutonium-cm-editor-video</h2>
+    </plutonium-cm-editor-video>
 
 @demo demo/index.html
 @hero hero.svg
 -->
 
-<dom-module id="plutonium-cm-link">
+<dom-module id="plutonium-cm-editor-video">
+    <link rel="import" type="css" href="plutonium-cm.css">
     <template>
         <style>
             :host {
-                display: inline-block;
+                /*display: block;*/
+                display: var(--plutonium-cm-field-display);
+                /*@apply(--layout-vertical);*/
                 @apply(--layout-horizontal);
+                /*@apply(--layout-flex);*/
                 --plutonium-cm-actions-display: none !important;
+                --plutonium-cm-field-display: inline-block;
             }
 
             :host > div {
@@ -52,14 +57,10 @@ Example:
                 @apply(--layout-horizontal);
             }
 
-            :host paper-card,
             :host paper-material {
-                background-color: white;
                 display: inline-block;
-            }
-            :host paper-card {
                 @apply(--layout-horizontal);
-                @apply(--layout-flex);
+                background-color: white;
             }
 
             .cm-fab {
@@ -75,46 +76,69 @@ Example:
 
         </style>
         <template is="dom-if" if="{{!sectionDisplay}}">
-
             <!--<div on-mouseover='onHovered' on-mouseout='onUnhovered'>-->
             <!--<div>-->
-            <paper-dialog id="video-editor-dialog" class="editor">
+            <paper-dialog id="video-editor-dialog" modal class="editor">
                 <h2>Edit video properties</h2>
                 <div class="content">
-                    <paper-input required auto-validate
-                                 label='Video url'
-                                 value$='{{url}}'
-                                 error-message='Invalid Youtube url.'>
+                    <paper-input label='Title' value$='{{title}}'>
 
                 </paper-input>
-            </div>
-            <div class="buttons">
-                <paper-button dialog-dismiss>Cancel</paper-button>
-                <paper-button dialog-confirm>Accept</paper-button>
-            </div>
-        </paper-dialog>
+                <paper-input required auto-validate
+                             label='Video url'
+                             error-message='Invalid Youtube url.'
+                             value$='{{url}}'>
 
-        <paper-card elevation="1" heading$="{{title}}">
-                    <paper-textarea label="Text">{{data}}</paper-textarea>
-        </paper-card>
+            </paper-input>
+        </div>
+        <div class="buttons">
+            <paper-button dialog-dismiss>Cancel</paper-button>
+            <paper-button dialog-confirm on-tap='onAccept'>Accept</paper-button>
+        </div>
+    </paper-dialog>
 
-        <paper-material elevation="1" id="plutonium-cm-actions">
-            <plutonium-cm-field-fabs name$='{{name}}' dialog-id$='{{dialogId}}'></plutonium-cm-field-fabs>
-        </paper-material>
-        <!--</div>-->
-    </template>
-    <template is="dom-if" if="{{sectionDisplay}}">
-        <a href$="{{data}}">{{title}}</a>
-    </template>
+    <paper-card elevation="1" heading$='{{title}}'>
+                <google-youtube
+            video-id$='{{data}}'
+            height="270px"
+            width="480px"
+            rel="0"
+            start="5"
+            autoplay="0">
+    </google-youtube>
+</paper-card>
+
+<paper-material elevation="1" id="plutonium-cm-actions">
+    <plutonium-cm-field-fabs   name$='{{name}}' dialog-id$='{{dialogId}}' ></plutonium-cm-field-fabs>
+</paper-material>
+<!--</div>-->
+
+</template>
+<template is="dom-if" if="{{sectionDisplay}}">
+    <google-youtube
+        video-id$='{{data}}'
+        height="270px"
+        width="480px"
+        rel="0"
+        start="5"
+        autoplay="0">
+</google-youtube>
+</template>
+
 </template>
 
 <script>
     (function () {
         'use strict';
         Polymer({
-            is: 'plutonium-cm-link',
+            is: 'plutonium-cm-editor-video',
             behaviors: [PlutoniumBehaviors.CmBehavior],
             properties: {
+                dialogId: {
+                    type: String,
+                    notify: true,
+                    value: 'video-editor-dialog'
+                }
             },
             listeners: {
                 'removeSection': 'removeSection',
@@ -122,7 +146,7 @@ Example:
             // Element Lifecycle
 
             ready: function () {
-                console.log('plutonium-cm-link[' + this.key + '] is ready.');
+                console.log('plutonium-cm-editor-video[' + this.key + '] is ready.');
                 console.log('\tstate: ' + (this.inlineEditor === true ? 'inline' : 'dialog') + ', ' + (this._edited === true ? 'editor' : 'preview'));
                 // `ready` is called after all elements have been configured, but
                 // propagates bottom-up. This element's children are ready, but parents
@@ -132,8 +156,8 @@ Example:
                 // necessary), or kick off any processes the element wants to perform.
             },
             attached: function () {
-                console.log('plutonium-cm-link[' + this.key + '] is attached.');
-                this.inlineEditor = true;
+                console.log('plutonium-cm-editor-video[' + this.key + '] is attached.');
+
                 // `attached` fires once the element and its parents have been inserted
                 // into a document.
                 //
@@ -143,7 +167,7 @@ Example:
 
             },
             detached: function () {
-                console.log('plutonium-cm-link[] is detached.');
+                console.log('plutonium-cm-editor-video[] is detached.');
                 // The analog to `attached`, `detached` fires when the element has been
                 // removed from a document.
                 //
@@ -182,6 +206,22 @@ Example:
             _computeUrl: function (id) {
                 this.url = 'https://www.youtube.com/watch?v=' + id;
                 console.log('Change id, new url is ' + this.url);
+            },
+            onAccept: function () {
+                this._edited = false;
+                this.fire('applyModel', {
+                    key: this.key,
+                    model: this.data
+                });
+                console.log('Show preview: ');
+                console.log('\tdialogId: ' + this.$.videoEditorDialog.dialogId);
+                console.log('\tdialogId: ' + this.dialogId);
+                console.log('\tname: ' + this.name);
+                console.log('\tname: ' + this.name);
+                console.log('\ttitle: ' + this.title);
+                console.log('\ttitle: ' + this.title);
+                console.log('\tdata: ' + this.data);
+                console.log('\tdata: ' + this.data);
             }
         });
     })();
