@@ -1,12 +1,6 @@
 {
     "elements": {
         "template": {},
-        "paper-dialog": {
-            "attributes": {
-                "id": {},
-                "class": {}
-            }
-        },
         "paper-icon-button": {
             "attributes": {
                 "on-click": {},
@@ -15,13 +9,6 @@
                 "title": {}
             }
         },
-        "paper-button": {
-            "attributes": {
-                "dialog-dismiss": {},
-                "dialog-confirm": {}
-            }
-        },
-        "dom-module": {},
         "paper-material": {
             "attributes": {
                 "elevation": {},
@@ -36,12 +23,27 @@
                 "on-mouseover": {}
             }
         },
-        "plutonium-cm-field-fabs": {},
         "paper-textarea": {
             "attributes": {
                 "label": {}
             }
         },
+        "content": {},
+        "paper-dialog": {
+            "attributes": {
+                "id": {},
+                "class": {}
+            }
+        },
+        "paper-button": {
+            "attributes": {
+                "dialog-dismiss": {},
+                "dialog-confirm": {}
+            }
+        },
+        "paper-fab": {},
+        "dom-module": {},
+        "plutonium-cm-field-fabs": {},
         "paper-input": {
             "attributes": {
                 "error-message": {},
@@ -50,7 +52,7 @@
                 "required": {}
             }
         },
-        "content": {}
+        "paper-toolbar": {}
     },
     "attributes": {}
 }

@@ -36,7 +36,8 @@
     "iron-icons": "polymerelements/iron-icons#^1.1.3",
     "iron-image": "polymerelements/iron-image#^1.2.2",
     "paper-card": "polymerelements/paper-card#^1.1.1",
-    "paper-fab": "polymerelements/paper-fab#^1.2.0"
+    "paper-fab": "polymerelements/paper-fab#^1.2.0",
+    "paper-toolbar": "polymerelements/paper-toolbar#^1.1.4"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",

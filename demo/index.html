@@ -31,26 +31,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <iron-ajax url="./sample-data/classification.json" last-response="{{classification}}" auto></iron-ajax>
             <iron-ajax url="./sample-data/model.json" last-response="{{model}}" auto></iron-ajax>
             <h2>Content editor</h2>
-            <plutonium-form style="width: 100%"
-                            classification="{{classification}}" fancy>
+            <plutonium-cm-form style="width: 100%"
+                            classification$="{{classification}}" fancy>
                 <!--        <plutonium-cm-video title="Video example" name="first" dialog-id="video-editor-dialog" data="Si4BM7QOWXI">
                             
                         </plutonium-cm-video>
                         <plutonium-cm-text title="Text example" name="second" dialog-id="video-editor-dialog" data="Si4BM7QOWXI">
                             
                         </plutonium-cm-text>
--->                        <plutonium-cm-field title="Field example" name="third" data="Si4BM7QOWXI">
+        <plutonium-cm-field title="Field example" name="third" data="Si4BM7QOWXI">
                             adasdadaadada
-                        </plutonium-cm-field><!--
+                        </plutonium-cm-field>
                         <plutonium-cm-image title="Image example" name="fourth" dialog-id="video-editor-dialog" data="https://www.google.hu/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&ved=0ahUKEwjGifff4qXLAhWFNpoKHX4XBssQjRwIBw&url=http%3A%2F%2Fwww.trademagazin.hu%2Fhirek-es-cikkek%2Fpiaci-hirek%2Fszeretjuk-a-kacsahust.html&psig=AFQjCNHKGebKo-p4MfAbQfxvxMKMgTF_jg&ust=1457137611971834">
                             
                         </plutonium-cm-image>
                         <plutonium-cm-video title="Video example 2" name="fifth" dialog-id="video-editor-dialog" data="Si4BM7QOWXI">
                             
                         </plutonium-cm-video>-->
-            </plutonium-form>
+            </plutonium-cm-form>
             <h2>Content display</h2>
-            <plutonium-cm-section classification="{{classification}}">
+            <plutonium-cm-section classification$="{{classification}}">
                 
             </plutonium-cm-section>
         </template>
