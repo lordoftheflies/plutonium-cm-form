@@ -84,11 +84,11 @@ Example:
         Polymer({
             is: 'plutonium-cm-form',
             properties: {
-                sections: {
-                    type: Object,
-                    notify: true,
-                    value: {}
-                },
+//                sections: {
+//                    type: Object,
+//                    notify: true,
+//                    value: {}
+//                },
                 /**
                  * Data-model of th form.
                  */
@@ -175,7 +175,7 @@ Example:
             },
             updateModel: function (model) {
                 console.log('Update model.');
-                this.classification.properties.forEach(function (property, index) {
+                this.classification.forEach(function (property, index) {
                     var selector = property.type + '[name="' + property.key + '"]';
                     var element = Polymer.dom(this).querySelector(selector);
                     if (element !== null)
@@ -185,7 +185,7 @@ Example:
             },
             instanceClassification: function (classification) {
                 var model = {}, sections = {};
-                classification.properties.forEach(function (property, index) {
+                classification.forEach(function (property, index) {
                     model[property.key] = (property.data === undefined) ? null : property.data;
                     sections[property.key] = index;
                 }, this);
@@ -193,12 +193,12 @@ Example:
                 this.model = model;
             },
             indexPropertySections: function () {
-                this.classification.properties.forEach(function (property, index) {
+                this.classification.forEach(function (property, index) {
                     this.sections[property.key] = index;
                 }, this);
             },
             renderContent: function (classification, model) {
-                classification.properties.forEach(function (property, index) {
+                classification.forEach(function (property, index) {
                     var selector = property.type + '[name="' + property.key + '"]';
                     var element = Polymer.dom(this).querySelector(selector);
                     if (element === undefined || element === null) {
@@ -220,7 +220,7 @@ Example:
             },
             onRemoveSection: function (e) {
                 console.log('Remove section ' + JSON.stringify(e.detail.key));
-                this.splice('classification.properties', this.sections[e.detail.key], 1);
+                this.splice('classification', this.sections[e.detail.key], 1);
                 e.target.parentNode.parentNode.remove();
                 this.indexPropertySections();
             }

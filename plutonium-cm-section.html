@@ -94,7 +94,7 @@ Example:
                 // Use this to clean up anything you did in `attached`.
             },
             renderContent: function (classification) {
-                classification.properties.forEach(function (property, index) {
+                classification.forEach(function (property, index) {
                     var selector = property.type + '[name="' + property.key + '"]';
                     var element = Polymer.dom(this).querySelector(selector);
                     if (element === undefined || element === null) {
