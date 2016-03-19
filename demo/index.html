@@ -32,7 +32,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <iron-ajax url="./sample-data/model.json" last-response="{{model}}" auto></iron-ajax>
             <h2>Content editor</h2>
             <plutonium-cm-form style="width: 100%"
-                            classification$="{{classification}}" fancy>
+                            content-model$="{{classification}}" fancy>
                 <!--        <plutonium-cm-video title="Video example" name="first" dialog-id="video-editor-dialog" data="Si4BM7QOWXI">
                             
                         </plutonium-cm-video>
@@ -50,7 +50,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         </plutonium-cm-video>-->
             </plutonium-cm-form>
             <h2>Content display</h2>
-            <plutonium-cm-section classification$="{{classification}}">
+            <plutonium-cm-section content-model$="{{classification}}">
                 
             </plutonium-cm-section>
         </template>

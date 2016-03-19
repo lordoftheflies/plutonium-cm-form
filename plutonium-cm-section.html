@@ -62,7 +62,7 @@ Example:
                 /**
                  * Data-model of th form.
                  */
-                classification: {
+                contentModel: {
                     type: Object,
                     notify: true,
                     observer: 'renderContent'
@@ -93,8 +93,8 @@ Example:
                 //
                 // Use this to clean up anything you did in `attached`.
             },
-            renderContent: function (classification) {
-                classification.forEach(function (property, index) {
+            renderContent: function (contentModel) {
+                contentModel.sections.forEach(function (property, index) {
                     var selector = property.type + '[name="' + property.key + '"]';
                     var element = Polymer.dom(this).querySelector(selector);
                     if (element === undefined || element === null) {
