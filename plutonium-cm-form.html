@@ -13,7 +13,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../paper-fab/paper-fab.html">
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-list/iron-list.html">
 <link rel="import" href="../paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../paper-dialog/paper-dialog.html">
+<link rel="import" href="../paper-item/paper-item.html">
 <link rel="import" href="plutonium-cm-shared-styles.html">
 
 <!--
@@ -42,14 +45,6 @@ Example:
                 box-sizing: border-box;
             }
 
-            .author img {
-                display: block;
-                float: left;
-                margin-right: 5px;
-                max-height: 100px;
-                max-width: 100px;
-            }
-
             :host .recipient-input {
                 @apply(--layout-horizontal);
             }
@@ -58,12 +53,39 @@ Example:
                 @apply(--layout-flex);
             }
         </style>
+
+        {{selectedContacts}}
+
+        <paper-dialog id="recipientChooserDialog" modal>
+            <h2>Contacts</h2>
+            <paper-dialog-scrollable>
+                <iron-list 
+                    id="contactList"
+                    as="contact" 
+                    selection-enabled 
+                    multi-selection
+                    attr-for-selected="email" 
+                    items="[[contacts]]" 
+                    selected="{{selectedContacts}}">
+                    <template>
+                        <paper-item class="item" tabindex$="[[tabIndex]]">[[contact.name]] ([[contact.email]])</paper-item>
+                    </template>
+                </iron-list>
+            </paper-dialog-scrollable>
+            <div class="buttons">
+                <paper-button dialog-dismiss>Cancel</paper-button>
+                <paper-button dialog-confirm>Ok</paper-button>
+            </div>
+        </paper-dialog>
+
         <!--<paper-toolbar class="medium-tall">-->
 
         <paper-material>
+
             <div class="recipient-input item">
+                {{selectedContacts}}
                 <paper-input label="To"></paper-input>
-                <paper-icon-button icon="supervisor-account" title="Choose users."></paper-icon-button>
+                <paper-icon-button icon="supervisor-account" title="Choose users." on-tap="onOpenRecipientsDialog"></paper-icon-button>
                 <paper-icon-button icon="clear" title="Clear"></paper-icon-button>
             </div>
             <paper-input class="bottom title" label="Title"></paper-input>
@@ -84,18 +106,21 @@ Example:
         Polymer({
             is: 'plutonium-cm-form',
             properties: {
-//                sections: {
-//                    type: Object,
-//                    notify: true,
-//                    value: {}
-//                },
                 /**
                  * Data-model of th form.
                  */
                 contentModel: {
                     type: Object,
+                    notify: true
+                },
+                contacts: {
+                    type: Array,
+                    notify: true
+                },
+                selectedContacts: {
+                    type: Array,
                     notify: true,
-//                    observer: 'instanceContentModel'
+                    value: []
                 }
             },
             listeners: {
@@ -105,8 +130,7 @@ Example:
             observers: [
                 'renderContent(contentModel)'
             ],
-//            // Element Lifecycle
-
+            // Element Lifecycle
             ready: function () {
                 // `ready` is called after all elements have been configured, but
                 // propagates bottom-up. This element's children are ready, but parents
@@ -131,30 +155,36 @@ Example:
                 // Use this to clean up anything you did in `attached`.
             },
             // Element Behavior
-//            updateModel: function (model) {
-//                console.log('Update model.');
-//                this.contentModel.sections.forEach(function (property, index) {
-//                    var selector = property.type + '[name="' + property.key + '"]';
-//                    var element = Polymer.dom(this).querySelector(selector);
-//                    if (element !== null)
-//                        Polymer.dom(element).setAttribute('data', this.model[property.key]);
-//                }, this);
-//                console.log('Render fields for: ' + JSON.stringify(this.model));
-//            },
-//            instanceClassification: function (contentModel) {
-//                var model = {}, sections = {};
-//                contentModel.sections.forEach(function (property, index) {
-//                    model[property.key] = (property.data === undefined) ? null : property.data;
-//                    sections[property.key] = index;
-//                }, this);
-//                console.log('Created model: ' + JSON.stringify(model));
-//                this.model = model;
-//            },
-//            indexPropertySections: function () {
-//                this.contentModel.sections.forEach(function (property, index) {
-//                    this.sections[property.key] = index;
-//                }, this);
-//            },
+            onOpenRecipientsDialog: function () {
+                this.$.contactList.updateViewportBoundaries();
+                this.$.recipientChooserDialog.open();
+
+//                this.$.contactList.fire().fire('iron-resize');
+            },
+            //            updateModel: function (model) {
+            //                console.log('Update model.');
+            //                this.contentModel.sections.forEach(function (property, index) {
+            //                    var selector = property.type + '[name="' + property.key + '"]';
+            //                    var element = Polymer.dom(this).querySelector(selector);
+            //                    if (element !== null)
+            //                        Polymer.dom(element).setAttribute('data', this.model[property.key]);
+            //                }, this);
+            //                console.log('Render fields for: ' + JSON.stringify(this.model));
+            //            },
+            //            instanceClassification: function (contentModel) {
+            //                var model = {}, sections = {};
+            //                contentModel.sections.forEach(function (property, index) {
+            //                    model[property.key] = (property.data === undefined) ? null : property.data;
+            //                    sections[property.key] = index;
+            //                }, this);
+            //                console.log('Created model: ' + JSON.stringify(model));
+            //                this.model = model;
+            //            },
+            //            indexPropertySections: function () {
+            //                this.contentModel.sections.forEach(function (property, index) {
+            //                    this.sections[property.key] = index;
+            //                }, this);
+            //            },
             renderContent: function (contentModel) {
                 console.log('Render content for content-form(' + this.$.id + '): ');
                 contentModel.sections.forEach(function (property, index) {
@@ -182,7 +212,7 @@ Example:
                 console.log('Remove section ' + JSON.stringify(e.detail.key));
                 this.splice('classification', this.sections[e.detail.key], 1);
                 e.target.parentNode.parentNode.remove();
-//                this.indexPropertySections();
+                //                this.indexPropertySections();
             }
         });
     </script>

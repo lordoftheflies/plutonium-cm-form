@@ -30,8 +30,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <template is="dom-bind" id="app">
             <iron-ajax url="./sample-data/classification.json" last-response="{{classification}}" auto></iron-ajax>
             <iron-ajax url="./sample-data/model.json" last-response="{{model}}" auto></iron-ajax>
+            <iron-ajax url="./sample-data/contacts.json" last-response="{{contacts}}" auto></iron-ajax>
             <h2>Content editor</h2>
             <plutonium-cm-form style="width: 100%"
+                               contacts$="{{contacts}}"
                             content-model$="{{classification}}" fancy>
                 <!--        <plutonium-cm-video title="Video example" name="first" dialog-id="video-editor-dialog" data="Si4BM7QOWXI">
                             
