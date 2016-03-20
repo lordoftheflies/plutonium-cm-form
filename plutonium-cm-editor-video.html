@@ -81,49 +81,49 @@ Example:
             <paper-dialog id="video-editor-dialog" modal class="editor">
                 <h2>Edit video properties</h2>
                 <div class="content">
-                    <paper-input label='Title' value$='{{title}}'>
+                    <paper-input label='Title' value="{{title}}">
 
-                </paper-input>
-                <paper-input required auto-validate
-                             label='Video url'
-                             error-message='Invalid Youtube url.'
-                             value$='{{url}}'>
+                    </paper-input>
+                    <paper-input required auto-validate
+                                 label='Video url'
+                                 error-message='Invalid Youtube url.'
+                                 value="{{url}}">
 
-            </paper-input>
-        </div>
-        <div class="buttons">
-            <paper-button dialog-dismiss>Cancel</paper-button>
-            <paper-button dialog-confirm on-tap='onAccept'>Accept</paper-button>
-        </div>
-    </paper-dialog>
+                    </paper-input>
+                </div>
+                <div class="buttons">
+                    <paper-button dialog-dismiss>Cancel</paper-button>
+                    <paper-button dialog-confirm on-tap='onAccept'>Accept</paper-button>
+                </div>
+            </paper-dialog>
 
-    <paper-card elevation="1" heading$='{{title}}'>
-                <google-youtube
-            video-id$='{{data}}'
-            height="270px"
-            width="480px"
-            rel="0"
-            start="5"
-            autoplay="0">
-    </google-youtube>
-</paper-card>
+            <paper-card elevation="1" heading="[[title]]">
+                        <google-youtube
+                    video-id="{{data}}"
+                    height="270px"
+                    width="480px"
+                    rel="0"
+                    start="5"
+                    autoplay="0">
+                </google-youtube>
+            </paper-card>
 
-<paper-material elevation="1" id="plutonium-cm-actions">
-    <plutonium-cm-field-fabs   name$='{{name}}' dialog-id$='{{dialogId}}' ></plutonium-cm-field-fabs>
-</paper-material>
-<!--</div>-->
+            <paper-material elevation="1" id="plutonium-cm-actions">
+                <plutonium-cm-field-fabs   name$='{{name}}' dialog-id$='{{dialogId}}' ></plutonium-cm-field-fabs>
+            </paper-material>
+            <!--</div>-->
 
-</template>
-<template is="dom-if" if="{{sectionDisplay}}">
-    <google-youtube
-        video-id$='{{data}}'
-        height="270px"
-        width="480px"
-        rel="0"
-        start="5"
-        autoplay="0">
-</google-youtube>
-</template>
+        </template>
+        <template is="dom-if" if="{{sectionDisplay}}">
+            <google-youtube
+                video-id$='{{data}}'
+                height="270px"
+                width="480px"
+                rel="0"
+                start="5"
+                autoplay="0">
+        </google-youtube>
+    </template>
 
 </template>
 
@@ -214,7 +214,6 @@ Example:
                     model: this.data
                 });
                 console.log('Show preview: ');
-                console.log('\tdialogId: ' + this.$.videoEditorDialog.dialogId);
                 console.log('\tdialogId: ' + this.dialogId);
                 console.log('\tname: ' + this.name);
                 console.log('\tname: ' + this.name);
