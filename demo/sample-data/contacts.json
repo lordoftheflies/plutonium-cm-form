@@ -1,22 +1,22 @@
 [
     {
+        "id": "584cf847-847e-4e37-a566-123b1f0c5dc1",
         "name": "Péczely Balázs",
         "email": "balazs.peczeli@digitaldefense.hu"
     },
     {
+        "id": "694059ad-ada3-442b-a75b-5d24516b2a13",
         "name": "fostaliga",
         "email": "fostaliga@gmail.com"
     },
     {
+        "id": "b8f69689-4b7f-41ec-a2c7-c68c0bb2b0ac",
         "name": "Hegedűs László",
         "email": "heglas11@gmail.com"
     },
     {
+        "id": "b7802957-1a3f-41fc-8760-6810fc5883d6",
         "name": "Kecske Kázmér",
         "email": "kazmer.kecske@gmail.com"
-    },
-    {
-        "name": "Kacsa Katalin",
-        "email": "katalin.kacsa@gmail.com"
     }
 ]

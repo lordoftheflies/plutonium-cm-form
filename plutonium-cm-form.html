@@ -9,14 +9,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-image/iron-image.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-list/iron-list.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../paper-material/paper-material.html">
 <link rel="import" href="../paper-fab/paper-fab.html">
 <link rel="import" href="../paper-input/paper-input.html">
-<link rel="import" href="../iron-icons/iron-icons.html">
-<link rel="import" href="../iron-list/iron-list.html">
 <link rel="import" href="../paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../paper-dialog/paper-dialog.html">
 <link rel="import" href="../paper-item/paper-item.html">
+<link rel="import" href="../paper-listbox/paper-listbox.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+
 <link rel="import" href="plutonium-cm-shared-styles.html">
 
 <!--
@@ -52,25 +58,35 @@ Example:
             :host div > paper-input{
                 @apply(--layout-flex);
             }
-        </style>
 
-        {{selectedContacts}}
+            #contactList {
+                @apply(--layout-flex);
+            }
+
+            .pad {
+                @apply(--layout-flex);
+                @apply(--layout-vertical);
+            }
+        </style>
 
         <paper-dialog id="recipientChooserDialog" modal>
             <h2>Contacts</h2>
-            <paper-dialog-scrollable>
-                <iron-list 
+            <paper-dialog-scrollable class="layout vertical">
+                <paper-listbox 
                     id="contactList"
-                    as="contact" 
-                    selection-enabled 
-                    multi-selection
-                    attr-for-selected="email" 
+                    class="layout flex"
+                    attr-for-selected="id"
+                    multi
                     items="[[contacts]]" 
-                    selected="{{selectedContacts}}">
-                    <template>
-                        <paper-item class="item" tabindex$="[[tabIndex]]">[[contact.name]] ([[contact.email]])</paper-item>
+                    selected-values="{{selectedContactIds}}">
+                    <template is="dom-repeat" items="[[contacts]]">
+                        <paper-item id="[[item.id]]" 
+                                    class="item pad">
+                            <label>[[item.name]]</label> 
+                            <label>(<span>[[item.email]]</span>)</label>
+                        </paper-item>
                     </template>
-                </iron-list>
+                </paper-listbox>
             </paper-dialog-scrollable>
             <div class="buttons">
                 <paper-button dialog-dismiss>Cancel</paper-button>
@@ -83,10 +99,9 @@ Example:
         <paper-material>
 
             <div class="recipient-input item">
-                {{selectedContacts}}
-                <paper-input label="To"></paper-input>
+                <paper-input name="recipients" label="To" value$="{{_recipients}}"></paper-input>
                 <paper-icon-button icon="supervisor-account" title="Choose users." on-tap="onOpenRecipientsDialog"></paper-icon-button>
-                <paper-icon-button icon="clear" title="Clear"></paper-icon-button>
+                <paper-icon-button icon="clear" title="Clear" on-tap="onClearRecipients"></paper-icon-button>
             </div>
             <paper-input class="bottom title" label="Title"></paper-input>
             <div class="item">
@@ -114,13 +129,18 @@ Example:
                     notify: true
                 },
                 contacts: {
-                    type: Array,
+                    type: Object,
                     notify: true
                 },
-                selectedContacts: {
-                    type: Array,
+                selectedContactIds: {
+                    type: Object,
                     notify: true,
                     value: []
+                },
+                _recipients: {
+                    type: String,
+                    notify: true,
+                    value: ''
                 }
             },
             listeners: {
@@ -128,7 +148,8 @@ Example:
                 'create': 'onCreateSection'
             },
             observers: [
-                'renderContent(contentModel)'
+                'renderContent(contentModel)',
+                'contactsAddedOrRemoved(selectedContactIds.splices)'
             ],
             // Element Lifecycle
             ready: function () {
@@ -156,10 +177,14 @@ Example:
             },
             // Element Behavior
             onOpenRecipientsDialog: function () {
-                this.$.contactList.updateViewportBoundaries();
+//                this.$.contactList.updateViewportBoundaries();
                 this.$.recipientChooserDialog.open();
 
 //                this.$.contactList.fire().fire('iron-resize');
+            },
+            onClearRecipients: function () {
+                this.splice('selectedContacts', 0, this.selectedContactIds.length);
+                console.log('plutonium-cm-form clear recipients.');
             },
             //            updateModel: function (model) {
             //                console.log('Update model.');
@@ -201,6 +226,20 @@ Example:
                     }
 
                 }, this);
+            },
+            contactsAddedOrRemoved: function (splice) {
+                if (splice === undefined || splice === null) return;
+                console.log('plutonium-cm-form change recipients: ' + JSON.stringify(this.selectedContactIds));
+                var recipients = '';
+                if (this.contacts !== undefined && this.contacts !== null) {
+                    this.contacts.forEach(function (item, index) {
+                        if (this.selectedContactIds.indexOf(item.id) > -1) {
+                            recipients += item.email + ' ';
+                        }
+                    }, this);
+                }
+                this._recipients = recipients;
+                console.log(this._recipients);
             },
             onCreateSection: function (e) {
                 console.log('Create new ' + JSON.stringify(e.detail.type) + ' section ' + JSON.stringify(e.detail.key));

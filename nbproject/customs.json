@@ -23,6 +23,7 @@
                 "on-mouseover": {}
             }
         },
+        "paper-item": {},
         "paper-dialog-scrollable": {},
         "paper-textarea": {
             "attributes": {
