@@ -17,6 +17,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../iron-icon/iron-icon.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
 <link rel="import" href="plutonium-cm-editor-behavior.html">
 <link rel="import" href="plutonium-cm-field-fabs.html">
 <link rel="import" href="plutonium-cm-shared-styles.html">
@@ -79,112 +80,130 @@ Example:
 
             <!--<div on-mouseover='onHovered' on-mouseout='onUnhovered'>-->
             <!--<div>-->
-            <paper-dialog id="video-editor-dialog" class="editor">
-                <h2>Edit video properties</h2>
+            <paper-dialog id="linkEditorDialog" class="editor">
+                <h2>Edit link properties</h2>
                 <div class="content">
-                    <paper-input required auto-validate
-                                 label='Video url'
-                                 value$='{{url}}'
-                                 error-message='Invalid Youtube url.'>
+                    <paper-input label="Title" value="{{title}}"></paper-input>
 
-                </paper-input>
-            </div>
-            <div class="buttons">
-                <paper-button dialog-dismiss>Cancel</paper-button>
-                <paper-button dialog-confirm>Accept</paper-button>
-            </div>
-        </paper-dialog>
+                    <input name="data" type="hidden" value="{{data}}" />
+                    <paper-dropdown-menu label="Reference">
+                        <paper-menu
+                            class="dropdown-content" selected="{{data}}" attr-for-selected="value"
+                            attr-for-selected="id">
+                            <template is="dom-repeat" items="{{shareableContents}}">
+                                <paper-item value="{{item.id}}">{{item.name}}</paper-item>
+                            </template>
+                        </paper-menu>
+                    </paper-dropdown-menu>
 
-        <paper-card elevation="1" heading$="{{title}}">
-                    <paper-textarea label="Text">{{data}}</paper-textarea>
-        </paper-card>
+                    </paper-input>
+                </div>
+                <div class="buttons">
+                    <paper-button dialog-dismiss>Cancel</paper-button>
+                    <paper-button dialog-confirm>Accept</paper-button>
+                </div>
+            </paper-dialog>
 
-        <paper-material elevation="1" id="plutonium-cm-actions">
-            <plutonium-cm-field-fabs name$='{{name}}' dialog-id$='{{dialogId}}'></plutonium-cm-field-fabs>
-        </paper-material>
-        <!--</div>-->
+            <paper-card elevation="1" heading$="{{title}}">
+                        <paper-textarea label="Text">{{data}}</paper-textarea>
+            </paper-card>
+
+            <paper-material elevation="1" id="plutonium-cm-actions">
+                <plutonium-cm-field-fabs name$='{{name}}' dialog-id$='{{dialogId}}'></plutonium-cm-field-fabs>
+            </paper-material>
+            <!--</div>-->
+
+        </template>
+        <template is="dom-if" if="{{sectionDisplay}}">
+            <a href$="{{data}}">{{title}}</a>
+        </template>
     </template>
-    <template is="dom-if" if="{{sectionDisplay}}">
-        <a href$="{{data}}">{{title}}</a>
-    </template>
-</template>
 
-<script>
-    (function () {
-        'use strict';
-        Polymer({
-            is: 'plutonium-cm-editor-link',
-            behaviors: [PlutoniumBehaviors.CmBehavior],
-            properties: {
-            },
-            listeners: {
-                'removeSection': 'removeSection',
-            },
-            // Element Lifecycle
+    <script>
+        (function () {
+            'use strict';
+            Polymer({
+                is: 'plutonium-cm-editor-link',
+                behaviors: [PlutoniumBehaviors.CmBehavior],
+                properties: {
+                    dialogId: {
+                        type: String,
+                        notify: true,
+                        value: 'linkEditorDialog'
+                    },
+                    shareableContents: {
+                        type: Array,
+                        notify: true
+                    }
+                },
+                listeners: {
+                    'removeSection': 'removeSection',
+                },
+                // Element Lifecycle
 
-            ready: function () {
-                console.log('plutonium-cm-editor-link[' + this.key + '] is ready.');
-                console.log('\tstate: ' + (this.inlineEditor === true ? 'inline' : 'dialog') + ', ' + (this._edited === true ? 'editor' : 'preview'));
-                // `ready` is called after all elements have been configured, but
-                // propagates bottom-up. This element's children are ready, but parents
-                // are not.
-                //
-                // This is the point where you should make modifications to the DOM (when
-                // necessary), or kick off any processes the element wants to perform.
-            },
-            attached: function () {
-                console.log('plutonium-cm-editor-link[' + this.key + '] is attached.');
-                this.inlineEditor = true;
-                // `attached` fires once the element and its parents have been inserted
-                // into a document.
-                //
-                // This is a good place to perform any work related to your element's
-                // visual state or active behavior (measuring sizes, beginning animations,
-                // loading resources, etc).
+                ready: function () {
+                    console.log('plutonium-cm-editor-link[' + this.key + '] is ready.');
+                    console.log('\tstate: ' + (this.inlineEditor === true ? 'inline' : 'dialog') + ', ' + (this._edited === true ? 'editor' : 'preview'));
+                    // `ready` is called after all elements have been configured, but
+                    // propagates bottom-up. This element's children are ready, but parents
+                    // are not.
+                    //
+                    // This is the point where you should make modifications to the DOM (when
+                    // necessary), or kick off any processes the element wants to perform.
+                },
+                attached: function () {
+                    console.log('plutonium-cm-editor-link[' + this.key + '] is attached.');
+                    this.inlineEditor = true;
+                    // `attached` fires once the element and its parents have been inserted
+                    // into a document.
+                    //
+                    // This is a good place to perform any work related to your element's
+                    // visual state or active behavior (measuring sizes, beginning animations,
+                    // loading resources, etc).
 
-            },
-            detached: function () {
-                console.log('plutonium-cm-editor-link[] is detached.');
-                // The analog to `attached`, `detached` fires when the element has been
-                // removed from a document.
-                //
-                // Use this to clean up anything you did in `attached`.
-            },
-            // Element Behavior
+                },
+                detached: function () {
+                    console.log('plutonium-cm-editor-link[] is detached.');
+                    // The analog to `attached`, `detached` fires when the element has been
+                    // removed from a document.
+                    //
+                    // Use this to clean up anything you did in `attached`.
+                },
+                // Element Behavior
 
-//            removeSection: function () {
-//                console.log('Remove field[' + this.key + ']');
-//            },
-//            showEditor: function (event) {
-//                this._edited = true;
-//                if (this.inlineEditor === false) {
-//                    console.log('Open properties of content in a dialog.');
-//                    document.getElementById(this.dialogId).open();
-//                } else {
-//                    console.log('Show properties of content inline.');
-//                }
-//            },
-//            applyModel: function () {
-//                this._edited = false;
-//                this.fire('applyModel', {
-//                    key: this.key,
-//                    model: this.data
-//                });
-//                console.log('Show preview.');
-//            },
-            observers: [
-                '_extractId(url)',
-                '_computeUrl(data)'
-            ],
-            _extractId: function (url) {
-                this.data = url.split('=')[1];
-                console.log('Change url, new id is ' + this.data);
-            },
-            _computeUrl: function (id) {
-                this.url = 'https://www.youtube.com/watch?v=' + id;
-                console.log('Change id, new url is ' + this.url);
-            }
-        });
-    })();
-</script>
+                //            removeSection: function () {
+                //                console.log('Remove field[' + this.key + ']');
+                //            },
+                //            showEditor: function (event) {
+                //                this._edited = true;
+                //                if (this.inlineEditor === false) {
+                //                    console.log('Open properties of content in a dialog.');
+                //                    document.getElementById(this.dialogId).open();
+                //                } else {
+                //                    console.log('Show properties of content inline.');
+                //                }
+                //            },
+                //            applyModel: function () {
+                //                this._edited = false;
+                //                this.fire('applyModel', {
+                //                    key: this.key,
+                //                    model: this.data
+                //                });
+                //                console.log('Show preview.');
+                //            },
+                observers: [
+                    '_extractId(url)',
+                    '_computeUrl(data)'
+                ],
+                _extractId: function (url) {
+                    this.data = url.split('=')[1];
+                    console.log('Change url, new id is ' + this.data);
+                },
+                _computeUrl: function (id) {
+                    this.url = 'https://www.youtube.com/watch?v=' + id;
+                    console.log('Change id, new url is ' + this.url);
+                }
+            });
+        })();
+    </script>
 </dom-module>

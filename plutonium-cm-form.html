@@ -228,7 +228,8 @@ Example:
                 }, this);
             },
             contactsAddedOrRemoved: function (splice) {
-                if (splice === undefined || splice === null) return;
+                if (splice === undefined || splice === null)
+                    return;
                 console.log('plutonium-cm-form change recipients: ' + JSON.stringify(this.selectedContactIds));
                 var recipients = '';
                 if (this.contacts !== undefined && this.contacts !== null) {
@@ -244,12 +245,20 @@ Example:
             onCreateSection: function (e) {
                 console.log('Create new ' + JSON.stringify(e.detail.type) + ' section ' + JSON.stringify(e.detail.key));
                 var el = document.createElement(e.detail.type);
+                el.setAttribute('name', "property-" + this.contentModel.sections.length);
+                
                 el.name = e.detail.key;
                 Polymer.dom(this.root).appendChild(el);
             },
             onRemoveSection: function (e) {
                 console.log('Remove section ' + JSON.stringify(e.detail.key));
-                this.splice('classification', this.sections[e.detail.key], 1);
+                this.splice('contentModel.sections', this.contentModel.sections.indexOf(
+                        this.contentModel.sections.filter(function (section) {
+                            if (section.name === e.detail.key)
+                                return true;
+                            else
+                                return false;
+                        })[0]), 1);
                 e.target.parentNode.parentNode.remove();
                 //                this.indexPropertySections();
             }

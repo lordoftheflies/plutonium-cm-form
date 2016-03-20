@@ -42,17 +42,30 @@
         onAddSection: function () {
             console.log('Add section after field[' + this.name + ']');
             this.fire('create', {
-                type: 'plutonium-cm-text'
+                key: this.name,
+                type: 'plutonium-cm-editor-text'
             });
         },
         onEmbedVideo: function () {
             console.log('Embed video to after field[' + this.name + ']');
+            this.fire('create', {
+                key: this.name,
+                type: 'plutonium-cm-editor-video'
+            });
         },
         onEmbedImage: function () {
             console.log('Embed image to after field[' + this.name + ']');
+            this.fire('create', {
+                key: this.name,
+                type: 'plutonium-cm-editor-image'
+            });
         },
         onEmbedLink: function () {
             console.log('Embed link to after field[' + this.name + ']');
+            this.fire('create', {
+                key: this.name,
+                type: 'plutonium-cm-editor-link'
+            });
         },
         onMoveUpSection: function () {
             console.log('Move up field[' + this.name + ']');

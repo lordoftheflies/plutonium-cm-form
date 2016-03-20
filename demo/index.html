@@ -27,53 +27,43 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </head>
     <body unresolved>
 
+        <button id="applyButton">Apply</button>
+
         <template is="dom-bind" id="app">
             <iron-ajax url="./sample-data/classification.json" last-response="{{classification}}" auto></iron-ajax>
             <iron-ajax url="./sample-data/model.json" last-response="{{model}}" auto></iron-ajax>
             <iron-ajax url="./sample-data/contacts.json" last-response="{{contacts}}" auto></iron-ajax>
             <h2>Content editor</h2>
-            <plutonium-cm-form style="width: 100%"
+            <plutonium-cm-form id="contentEditor" style="width: 100%"
                                contacts$="{{contacts}}"
-                            content-model$="{{classification}}" fancy>
-                <!--        <plutonium-cm-video title="Video example" name="first" dialog-id="video-editor-dialog" data="Si4BM7QOWXI">
-                            
-                        </plutonium-cm-video>
-                        <plutonium-cm-text title="Text example" name="second" dialog-id="video-editor-dialog" data="Si4BM7QOWXI">
-                            
-                        </plutonium-cm-text>
-        <plutonium-cm-field title="Field example" name="third" data="Si4BM7QOWXI">
-                            adasdadaadada
-                        </plutonium-cm-field>
-                        <plutonium-cm-image title="Image example" name="fourth" dialog-id="video-editor-dialog" data="https://www.google.hu/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&ved=0ahUKEwjGifff4qXLAhWFNpoKHX4XBssQjRwIBw&url=http%3A%2F%2Fwww.trademagazin.hu%2Fhirek-es-cikkek%2Fpiaci-hirek%2Fszeretjuk-a-kacsahust.html&psig=AFQjCNHKGebKo-p4MfAbQfxvxMKMgTF_jg&ust=1457137611971834">
-                            
-                        </plutonium-cm-image>
-                        <plutonium-cm-video title="Video example 2" name="fifth" dialog-id="video-editor-dialog" data="Si4BM7QOWXI">
-                            
-                        </plutonium-cm-video>-->
-            </plutonium-cm-form>
-            <h2>Content display</h2>
-            <plutonium-cm-section content-model$="{{classification}}">
-                
-            </plutonium-cm-section>
-        </template>
-        <script>
+                               content-model$="{{classification}}">
+        </plutonium-cm-form>
+        <h2>Content display</h2>
+        <plutonium-cm-section id="contentDisplay"  content-model="{{classification}}">
 
+        </plutonium-cm-section>
 
-    var formElement = document.querySelector('plutonium-form');
+    </template>
+    <script>
+HTMLImports.whenReady(function () {
 
-    //        document.querySelector('#saybtn').addEventListener('click', function () {
-    //            alert(formElement.sayHello('Hallo!'));
-    //        });
-    //
-    //        document.querySelector('#laserbtn').addEventListener('click', function () {
-    //            formElement.fireLasers();
-    //        });
-    //
-    //        document.addEventListener("plutonium-form-lasers", function (e) {
-    //            console.log(e.detail.sound);
-    //        });
+    document.getElementById('applyButton').addEventListener('click', function () {
 
-        </script>
+        var model = JSON.parse(document.getElementById('contentEditor').getAttribute('content-model'));
+        console.log('Apply model publishing: ' + JSON.stringify(model));
+        document.getElementById('contentDisplay').setAttribute('content-model', JSON.stringify(model));
+    });
+});
+//
+//        document.querySelector('#laserbtn').addEventListener('click', function () {
+//            formElement.fireLasers();
+//        });
+//
+//        document.addEventListener("plutonium-form-lasers", function (e) {
+//            console.log(e.detail.sound);
+//        });
 
-    </body>
+    </script>
+
+</body>
 </html>
