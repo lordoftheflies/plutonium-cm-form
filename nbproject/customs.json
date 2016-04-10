@@ -46,6 +46,7 @@
         },
         "paper-fab": {},
         "dom-module": {},
+        "plutonium-field-recipient": {},
         "plutonium-cm-field-fabs": {},
         "paper-input": {
             "attributes": {

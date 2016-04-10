@@ -15,6 +15,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../iron-list/iron-list.html">
 <link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../paper-material/paper-material.html">
+<link rel="import" href="../paper-card/paper-card.html">
 <link rel="import" href="../paper-fab/paper-fab.html">
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../paper-toolbar/paper-toolbar.html">
@@ -22,6 +23,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../paper-item/paper-item.html">
 <link rel="import" href="../paper-listbox/paper-listbox.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../plutonium-field-recipient/plutonium-field-recipient.html">
 
 <link rel="import" href="plutonium-cm-shared-styles.html">
 
@@ -49,71 +51,59 @@ Example:
             :host {
                 display: inline-block;
                 box-sizing: border-box;
+                /*@apply(--layout-vertical);*/
             }
 
-            :host .recipient-input {
-                @apply(--layout-horizontal);
+            paper-fab {
+                --paper-fab: {
+                    @apply(--layout-horizontal);
+                    @apply(--layout-end-justified);
+                }
             }
 
-            :host div > paper-input{
-                @apply(--layout-flex);
-            }
-
-            #contactList {
-                @apply(--layout-flex);
-            }
-
-            .pad {
-                @apply(--layout-flex);
-                @apply(--layout-vertical);
+            paper-card {
+                /*                @apply(--layout-vertical);
+                                @apply(--layout-centered);*/
             }
         </style>
 
-        <paper-dialog id="recipientChooserDialog" modal>
-            <h2>Contacts</h2>
-            <paper-dialog-scrollable class="layout vertical">
-                <paper-listbox 
-                    id="contactList"
-                    class="layout flex"
+        <paper-card heading="Share with ...">
+
+            <paper-fab icon="send" class="horizontal end-justified layout"></paper-fab>    
+
+            <div class="card-content">
+                <plutonium-field-recipient
+                    label="To"
+                    picker-icon="supervisor-account"
+                    picker-title="Contacts"
+                    picker-button-tooltip="Choose contacts."
+                    clear-icon="clear"
+                    clear-button-tooltip="Clear recipients input."
                     attr-for-selected="id"
-                    multi
-                    items="[[contacts]]" 
-                    selected-values="{{selectedContactIds}}">
+                    as="item"
+                    items="[[contacts]]">
                     <template is="dom-repeat" items="[[contacts]]">
-                        <paper-item id="[[item.id]]" 
-                                    class="item pad">
+                        <paper-item id="[[item.id]]" class="item pad">
                             <label>[[item.name]]</label> 
                             <label>(<span>[[item.email]]</span>)</label>
                         </paper-item>
                     </template>
-                </paper-listbox>
-            </paper-dialog-scrollable>
-            <div class="buttons">
-                <paper-button dialog-dismiss>Cancel</paper-button>
-                <paper-button dialog-confirm>Ok</paper-button>
-            </div>
-        </paper-dialog>
+                </plutonium-field-recipient>
 
-        <!--<paper-toolbar class="medium-tall">-->
-
-        <paper-material>
-
-            <div class="recipient-input item">
-                <paper-input name="recipients" label="To" value$="{{_recipients}}"></paper-input>
-                <paper-icon-button icon="supervisor-account" title="Choose users." on-tap="onOpenRecipientsDialog"></paper-icon-button>
-                <paper-icon-button icon="clear" title="Clear" on-tap="onClearRecipients"></paper-icon-button>
+                <paper-input class="bottom title" label="Title"></paper-input>
             </div>
-            <paper-input class="bottom title" label="Title"></paper-input>
-            <div class="item">
-                <paper-fab icon="send"></paper-fab>
-            </div>
-        </paper-material>
+            <!--<div class="card-actions" class="horizontal end-justified layout">-->
+
+            <!--</div>-->
+
+        </paper-card>
         <!--</paper-toolbar>-->
+        <br />
+        <paper-card heading="Edit content ...">
+            <content id="cm">
 
-        <!--<form id="container-form">-->
-        <content id="cm">
-
-        </content>
+            </content>
+        </paper-card>
         <!--</form>-->
     </template>
 
@@ -141,6 +131,8 @@ Example:
                     type: String,
                     notify: true,
                     value: ''
+                },
+                backendUrl: {
                 }
             },
             listeners: {
@@ -149,7 +141,6 @@ Example:
             },
             observers: [
                 'renderContent(contentModel)',
-                'contactsAddedOrRemoved(selectedContactIds.splices)'
             ],
             // Element Lifecycle
             ready: function () {
@@ -176,40 +167,7 @@ Example:
                 // Use this to clean up anything you did in `attached`.
             },
             // Element Behavior
-            onOpenRecipientsDialog: function () {
-//                this.$.contactList.updateViewportBoundaries();
-                this.$.recipientChooserDialog.open();
 
-//                this.$.contactList.fire().fire('iron-resize');
-            },
-            onClearRecipients: function () {
-                this.splice('selectedContacts', 0, this.selectedContactIds.length);
-                console.log('plutonium-cm-form clear recipients.');
-            },
-            //            updateModel: function (model) {
-            //                console.log('Update model.');
-            //                this.contentModel.sections.forEach(function (property, index) {
-            //                    var selector = property.type + '[name="' + property.key + '"]';
-            //                    var element = Polymer.dom(this).querySelector(selector);
-            //                    if (element !== null)
-            //                        Polymer.dom(element).setAttribute('data', this.model[property.key]);
-            //                }, this);
-            //                console.log('Render fields for: ' + JSON.stringify(this.model));
-            //            },
-            //            instanceClassification: function (contentModel) {
-            //                var model = {}, sections = {};
-            //                contentModel.sections.forEach(function (property, index) {
-            //                    model[property.key] = (property.data === undefined) ? null : property.data;
-            //                    sections[property.key] = index;
-            //                }, this);
-            //                console.log('Created model: ' + JSON.stringify(model));
-            //                this.model = model;
-            //            },
-            //            indexPropertySections: function () {
-            //                this.contentModel.sections.forEach(function (property, index) {
-            //                    this.sections[property.key] = index;
-            //                }, this);
-            //            },
             renderContent: function (contentModel) {
                 console.log('Render content for content-form(' + this.$.id + '): ');
                 contentModel.sections.forEach(function (property, index) {
@@ -227,26 +185,11 @@ Example:
 
                 }, this);
             },
-            contactsAddedOrRemoved: function (splice) {
-                if (splice === undefined || splice === null)
-                    return;
-                console.log('plutonium-cm-form change recipients: ' + JSON.stringify(this.selectedContactIds));
-                var recipients = '';
-                if (this.contacts !== undefined && this.contacts !== null) {
-                    this.contacts.forEach(function (item, index) {
-                        if (this.selectedContactIds.indexOf(item.id) > -1) {
-                            recipients += item.email + ' ';
-                        }
-                    }, this);
-                }
-                this._recipients = recipients;
-                console.log(this._recipients);
-            },
             onCreateSection: function (e) {
                 console.log('Create new ' + JSON.stringify(e.detail.type) + ' section ' + JSON.stringify(e.detail.key));
                 var el = document.createElement(e.detail.type);
                 el.setAttribute('name', "property-" + this.contentModel.sections.length);
-                
+
                 el.name = e.detail.key;
                 Polymer.dom(this.root).appendChild(el);
             },
