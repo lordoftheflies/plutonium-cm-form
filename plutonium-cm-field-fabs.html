@@ -40,9 +40,15 @@ Example:
     <template>
 
         <style>
+            :host {
+                display: var(--plutonium-cm-actions-display);
+/*                margin-left: 20px;
+                @apply(--layout-horizontal);
+                @apply(--layout-centered);*/
+            }
 
             :host > div.cm-fab {
-                @apply(--layout-vertical);
+                @apply(--layout-horizontal);
                 @apply(--layout-centered);
             }
 
