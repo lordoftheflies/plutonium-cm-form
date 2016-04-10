@@ -25,6 +25,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../plutonium-field-recipient/plutonium-field-recipient.html">
 
+<link rel="import" href="plutonium-cm-field.html">
 <link rel="import" href="plutonium-cm-shared-styles.html">
 
 <!--
@@ -67,7 +68,7 @@ Example:
             }
         </style>
 
-        <paper-card heading="Share with ...">
+        <paper-card heading="Share with">
 
             <paper-fab icon="send" class="horizontal end-justified layout"></paper-fab>    
 
@@ -99,10 +100,22 @@ Example:
         </paper-card>
         <!--</paper-toolbar>-->
         <br />
-        <paper-card heading="Edit content ...">
-            <content id="cm">
+        <paper-card heading="Edit content">
+            <div class="card-content">
+                <content id="cm">
 
-            </content>
+                </content>
+
+                <paper-listbox selected="0">
+                    <template is="dom-repeat" items="{{contentModel.sections}}" as="section">
+                        <!--<paper-item>-->
+                        <plutonium-cm-field id="{{computeItemId(section)}}" model="{{section}}">
+                        </plutonium-cm-field>
+                        <br />
+                        <!--</paper-item>-->
+                    </template>
+                </paper-listbox>
+            </div>
         </paper-card>
         <!--</form>-->
     </template>
@@ -126,18 +139,12 @@ Example:
                     type: Object,
                     notify: true,
                     value: []
-                },
-                _recipients: {
-                    type: String,
-                    notify: true,
-                    value: ''
-                },
-                backendUrl: {
                 }
             },
             listeners: {
                 'remove': 'onRemoveSection',
-                'create': 'onCreateSection'
+                'create': 'onCreateSection',
+                'iron-items-changed': 'onRefresh'
             },
             observers: [
                 'renderContent(contentModel)',
@@ -151,6 +158,7 @@ Example:
                 // This is the point where you should make modifications to the DOM (when
                 // necessary), or kick off any processes the element wants to perform.
                 console.log("Form is ready, initialize classification ...");
+                //                this.renderContent(this.contentModel);
             },
             attached: function () {
                 // `attached` fires once the element and its parents have been inserted
@@ -167,23 +175,34 @@ Example:
                 // Use this to clean up anything you did in `attached`.
             },
             // Element Behavior
-
+            computeItemId: function (item) {
+                return 'section' + this.contentModel.sections.indexOf(item);
+            },
             renderContent: function (contentModel) {
-                console.log('Render content for content-form(' + this.$.id + '): ');
-                contentModel.sections.forEach(function (property, index) {
-                    console.log('\t- Section #' + index + ': ' + JSON.stringify(property));
-                    var selector = property.type + '[name="' + property.key + '"]';
-                    var element = Polymer.dom(this).querySelector(selector);
-                    if (element === undefined || element === null) {
-                        element = document.createElement(property.type);
-                        Polymer.dom(element).setAttribute('name', property.key);
-                        Polymer.dom(element).setAttribute('title', 'Properties of ' + property.key);
-                        Polymer.dom(element).setAttribute('data', property.data);
-                        Polymer.dom(this).appendChild(element);
-
-                    }
-
-                }, this);
+                //            console.log('Render content for content-form(' + this.$.id + '): ');
+                //            contentModel.sections.forEach(function (property, index) {
+                //                var selector = property.type + '[name="' + property.key + '"]';
+                //                var element = Polymer.dom(this).querySelector(selector);
+                //                if (element === undefined || element === null) {
+                //                    element = document.createElement(property.type);
+                //                    Polymer.dom(element).setAttribute('name', property.key);
+                //                    Polymer.dom(element).setAttribute('title', 'Properties of ' + property.key);
+                //                    Polymer.dom(element).setAttribute('data', property.data);
+                //
+                //                    var conteinerItem = Polymer.dom(this.root).querySelector('#section' + index);
+                //                    if (conteinerItem !== undefined && conteinerItem !== null) {
+                //                        console.log('\t- Section #' + index + ': ' + JSON.stringify(property));
+                //                        conteinerItem.appendChild(element);
+                //                    }
+                //
+                //                }
+                //
+                //            }, this);
+                //            Polymer.dom.flush();
+                //            Polymer.updateStyles();
+            },
+            onRefresh: function (e) {
+                this.renderContent(this.contentModel);
             },
             onCreateSection: function (e) {
                 console.log('Create new ' + JSON.stringify(e.detail.type) + ' section ' + JSON.stringify(e.detail.key));

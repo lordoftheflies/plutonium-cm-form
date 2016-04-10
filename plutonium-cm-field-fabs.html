@@ -43,23 +43,23 @@ Example:
             :host {
                 display: var(--plutonium-cm-actions-display);
 /*                margin-left: 20px;
-                @apply(--layout-horizontal);
-                @apply(--layout-centered);*/
+*/                @apply(--layout-horizontal);
+                /*@apply(--layout-centered);*/
             }
 
-            :host > div.cm-fab {
-                @apply(--layout-horizontal);
-                @apply(--layout-centered);
-            }
+            /*            :host > div.cm-fab {
+                            @apply(--layout-horizontal);
+                            @apply(--layout-centered);
+                        }*/
 
             #plutonium-cm-actions {
                 display: var(--plutonium-cm-actions-display);
-                margin-left: 20px;
+                /*margin-left: 20px;*/
 
             }
 
         </style>
-        <div class="cm-fab">
+<!--        <div class="cm-fab">-->
             <paper-icon-button on-click="onMoveUpSection" icon="expand-less" raised></paper-icon-button>
             <paper-icon-button on-click="onAddSection" icon="add-circle" title="Embedd video to the message content."></paper-icon-button>
             <paper-icon-button on-click="onEmbedVideo" icon="theaters" title="Embedd video to the message content."></paper-icon-button>
@@ -68,7 +68,7 @@ Example:
             <paper-icon-button on-click="onShowEditor" icon="create" raised></paper-icon-button>
             <paper-icon-button on-click="onRemoveSection" icon="delete" title="{{removeTitle}}"></paper-icon-button>
             <paper-icon-button on-click="onMoveDownSection" icon="expand-more" raised></paper-icon-button>
-        </div>
+        <!--</div>-->
     </template>
 
     <script>

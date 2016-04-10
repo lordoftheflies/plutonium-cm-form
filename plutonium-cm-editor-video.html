@@ -43,10 +43,18 @@ Example:
     <template>
         <style>
             :host {
+                display: inline-block;
+                position: relative;
+                box-sizing: border-box;
+                background-color: var(--paper-card-background-color, --primary-background-color);
+                border-radius: 2px;
+                @apply(--paper-font-common-base);
+                @apply(--paper-card);
+
                 /*display: block;*/
                 display: var(--plutonium-cm-field-display);
-                /*@apply(--layout-vertical);*/
-                @apply(--layout-horizontal);
+                @apply(--layout-vertical);
+                /*@apply(--layout-horizontal);*/
                 /*@apply(--layout-flex);*/
                 --plutonium-cm-actions-display: none !important;
                 --plutonium-cm-field-display: inline-block;
@@ -59,20 +67,38 @@ Example:
 
             :host paper-material {
                 display: inline-block;
-                @apply(--layout-horizontal);
+                @apply(--layout-vertical);
                 background-color: white;
             }
 
-/*            .cm-fab {
-                @apply(--layout-vertical);
-                @apply(--layout-centered);
+            .header {
+                position: relative;
+                border-top-left-radius: inherit;
+                border-top-right-radius: inherit;
+                overflow: hidden;
+                @apply(--paper-card-header);
+                @apply(--layout-horizontal);
             }
 
-            #plutonium-cm-actions {
-                display: var(--plutonium-cm-actions-display);
-                margin-left: 20px;
+            .header .title-text {
+                @apply(--layout-flex);
+                padding: 16px;
+                font-size: 24px;
+                font-weight: 400;
+                color: var(--paper-card-header-color, #000);
+                @apply(--paper-card-header-text);
+            }
 
-            }*/
+            /*            .cm-fab {
+                            @apply(--layout-vertical);
+                            @apply(--layout-centered);
+                        }
+            
+                        #plutonium-cm-actions {
+                            display: var(--plutonium-cm-actions-display);
+                            margin-left: 20px;
+            
+                        }*/
 
         </style>
         <template is="dom-if" if="{{!sectionDisplay}}">
@@ -97,8 +123,16 @@ Example:
                 </div>
             </paper-dialog>
 
-            <paper-card elevation="1" heading="[[title]]">
-                        <google-youtube
+<!--            <paper-material elevation="2">
+                <div class="header">
+                    <label class="title-text">[[title]]</label>
+                    <paper-material elevation="3" id="plutonium-cm-actions">
+                        <plutonium-cm-field-fabs name$='{{name}}' dialog-id$='{{dialogId}}' ></plutonium-cm-field-fabs>
+                    </paper-material>
+                </div>-->
+
+
+                <google-youtube
                     video-id="{{data}}"
                     height="270px"
                     width="480px"
@@ -106,11 +140,10 @@ Example:
                     start="5"
                     autoplay="0">
                 </google-youtube>
-            </paper-card>
+            <!--</paper-material>-->
+            <!--<br />-->
 
-            <paper-material elevation="1" id="plutonium-cm-actions">
-                <plutonium-cm-field-fabs   name$='{{name}}' dialog-id$='{{dialogId}}' ></plutonium-cm-field-fabs>
-            </paper-material>
+
             <!--</div>-->
 
         </template>
