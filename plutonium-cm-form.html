@@ -97,6 +97,14 @@ Example:
         <br />
         <paper-card heading="Edit content">
             <div class="card-content">
+                <template is="dom-if" if$="{{isEmpty()}}">
+                    <div class="header">
+                        <paper-material elevation="3" id="plutonium-cm-actions">
+                            <plutonium-cm-field-fabs name$='{{name}}' dialog-id$='{{dialogId}}' ></plutonium-cm-field-fabs>
+                        </paper-material>
+                    </div>
+                </template>
+
                 <content id="cm">
 
                 </content>
@@ -177,6 +185,11 @@ Example:
                 // Use this to clean up anything you did in `attached`.
             },
             // Element Behavior
+            isEmpty: function () {
+                return this.contentModel === undefined
+                        || this.contentModel === null
+                        || this.contentModel.sections.length === 0;
+            },
             computeItemId: function (item) {
                 return 'section' + this.contentModel.sections.indexOf(item);
             },
