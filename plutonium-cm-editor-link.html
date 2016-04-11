@@ -80,29 +80,7 @@ Example:
 
             <!--<div on-mouseover='onHovered' on-mouseout='onUnhovered'>-->
             <!--<div>-->
-            <paper-dialog id="linkEditorDialog" class="editor">
-                <h2>Edit link properties</h2>
-                <div class="content">
-                    <paper-input label="Title" value="{{title}}"></paper-input>
-
-                    <input name="data" type="hidden" value="{{data}}" />
-                    <paper-dropdown-menu label="Reference">
-                        <paper-menu
-                            class="dropdown-content" selected="{{data}}" attr-for-selected="value"
-                            attr-for-selected="id">
-                            <template is="dom-repeat" items="{{shareableContents}}">
-                                <paper-item value="{{item.id}}">{{item.name}}</paper-item>
-                            </template>
-                        </paper-menu>
-                    </paper-dropdown-menu>
-
-                    </paper-input>
-                </div>
-                <div class="buttons">
-                    <paper-button dialog-dismiss>Cancel</paper-button>
-                    <paper-button dialog-confirm>Accept</paper-button>
-                </div>
-            </paper-dialog>
+            
 
             <!--<paper-card elevation="1" heading$="{{title}}">-->
             <paper-textarea label="Text">{{data}}</paper-textarea>

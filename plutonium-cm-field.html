@@ -146,7 +146,8 @@ Example:
                     }
                 },
                 listeners: {
-                    'removeSection': 'removeSection'
+                    'removeSection': 'removeSection',
+                    'render': 'onRender'
                 },
                 // Element Lifecycle
 
@@ -203,23 +204,27 @@ Example:
                 observers: [
                     '_extractId(url)',
                     '_computeUrl(data)',
-                    'renderByModel(model, id)'
+                    'renderByModel(model, id, dialogId)'
                 ],
-                renderByModel: function (model, id) {
+                renderByModel: function (model, id, dialogId) {
                     var selector = model.type + '[name="' + model.key + '"]';
                     var element = Polymer.dom(this).querySelector(selector);
-                    console.log('\t- Section #' + id + ': ' + JSON.stringify(this.model));
+                    console.log('\t- Section #' + id + '-#' + this.dialogId + ': ' + JSON.stringify(this.model));
 
                     if (element === undefined || element === null) {
                         element = document.createElement(model.type);
                         Polymer.dom(element).setAttribute('name', model.key);
                         Polymer.dom(element).setAttribute('title', model.key);
                         Polymer.dom(element).setAttribute('data', model.data);
+                        Polymer.dom(element).setAttribute('dialog-id', dialogId);
 
                         Polymer.dom(this).appendChild(element);
 
 
                     }
+                },
+                onRender: function () {
+
                 },
                 _extractId: function (url) {
                     this.data = url.split('=')[1];

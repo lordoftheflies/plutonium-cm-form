@@ -30,6 +30,7 @@
                 "label": {}
             }
         },
+        "iron-ajax": {},
         "content": {},
         "iron-list": {},
         "paper-dialog": {
@@ -38,6 +39,9 @@
                 "class": {}
             }
         },
+        "plutonium-cm-field": {},
+        "plutonium-cm-form": {},
+        "plutonium-cm-section": {},
         "paper-button": {
             "attributes": {
                 "dialog-dismiss": {},
@@ -60,6 +64,13 @@
         "paper-toolbar": {}
     },
     "attributes": {
-        "tabindex$": {}
+        "last-response": {},
+        "unresolved": {},
+        "auto": {},
+        "content-model": {},
+        "tabindex$": {},
+        "style": {},
+        "id": {},
+        "url": {}
     }
 }

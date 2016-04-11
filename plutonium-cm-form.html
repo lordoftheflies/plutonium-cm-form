@@ -93,12 +93,7 @@ Example:
 
                 <paper-input class="bottom title" label="Title"></paper-input>
             </div>
-            <!--<div class="card-actions" class="horizontal end-justified layout">-->
-
-            <!--</div>-->
-
         </paper-card>
-        <!--</paper-toolbar>-->
         <br />
         <paper-card heading="Edit content">
             <div class="card-content">
@@ -108,16 +103,18 @@ Example:
 
                 <paper-listbox selected="0">
                     <template is="dom-repeat" items="{{contentModel.sections}}" as="section">
-                        <!--<paper-item>-->
-                        <plutonium-cm-field id="{{computeItemId(section)}}" model="{{section}}">
+                        <plutonium-cm-field 
+                            id="{{computeItemId(section)}}" 
+                            model="{{section}}" 
+                            dialog-id="{{computeDialogId(section)}}">
                         </plutonium-cm-field>
                         <br />
-                        <!--</paper-item>-->
                     </template>
                 </paper-listbox>
             </div>
         </paper-card>
-        <!--</form>-->
+
+        <content></content>
     </template>
 
     <script>
@@ -139,6 +136,10 @@ Example:
                     type: Object,
                     notify: true,
                     value: []
+                },
+                editors: {
+                    type: Object,
+                    notify: true
                 }
             },
             listeners: {
@@ -147,6 +148,7 @@ Example:
                 'iron-items-changed': 'onRefresh'
             },
             observers: [
+                'updateFields(editors, contentModel)',
                 'renderContent(contentModel)',
             ],
             // Element Lifecycle
@@ -178,6 +180,20 @@ Example:
             computeItemId: function (item) {
                 return 'section' + this.contentModel.sections.indexOf(item);
             },
+            computeDialogId: function (item) {
+                console.log('------------------------------------------' + JSON.stringify(this.editors) + '||||||' + this.editors[item.type]);
+                return this.editors[item.type];
+            },
+            updateFields: function (editors, contentModel) {
+                console.log('plutonium-cm-form#' + this.id + ': update fields');
+//                this.fire('render', {
+//                    editors: this.editors
+//                });
+                contentModel.sections.forEach(function (item, index) {
+                    var element = Polymer.dom(this).querySelector(this.computeItemId(item));
+//                    Polymer.dom(element).setAttribute('dialog-id', editors[item.type]);
+                }, this);
+            },
             renderContent: function (contentModel) {
                 //            console.log('Render content for content-form(' + this.$.id + '): ');
                 //            contentModel.sections.forEach(function (property, index) {
@@ -208,7 +224,6 @@ Example:
                 console.log('Create new ' + JSON.stringify(e.detail.type) + ' section ' + JSON.stringify(e.detail.key));
                 var el = document.createElement(e.detail.type);
                 el.setAttribute('name', "property-" + this.contentModel.sections.length);
-
                 el.name = e.detail.key;
                 Polymer.dom(this.root).appendChild(el);
             },
