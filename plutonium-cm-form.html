@@ -70,13 +70,22 @@ Example:
             }
         </style>
         <paper-card>
+            <div class="header">
+                <paper-material elevation="2" id="plutonium-cm-actions" class="layout horizontal">
+                    <paper-tabs class="flex" selected="{{selectedMetaAction}}">
+                        <paper-tab>Share</paper-tab>
+                        <paper-tab>Content</paper-tab>
+                        <paper-tab>Properties</paper-tab>
+                    </paper-tabs>
+                    <template is="dom-if" if$="{{isEmpty()}}">
+                              <plutonium-cm-field-fabs class="end-justified" name$='{{name}}' dialog-id$='{{dialogId}}' ></plutonium-cm-field-fabs>
+                    </template>
+                </paper-material>
+            </div>
             <div class="card-content">
-                <paper-tabs selected="{{selectedMetaAction}}">
-                    <paper-tab>Share</paper-tab>
-                    <paper-tab>Properties</paper-tab>
-                </paper-tabs>
 
-                <iron-pages selected$="{{selectedMetaAction}}">
+
+                <iron-pages selected="{{selectedMetaAction}}">
                             <!--            <paper-card heading="Share with">-->
 
                             <div>
@@ -102,9 +111,25 @@ Example:
 
                         <paper-input class="bottom title" label="Message"></paper-input>
                     </div>
-                    <!--</paper-card>-->
 
-                    <!--<paper-card heading="Share with">-->
+                    <div class="card-content">
+
+
+                        <content id="cm">
+
+                        </content>
+
+                        <paper-listbox selected="0">
+                            <template is="dom-repeat" items="{{contentModel.sections}}" as="section">
+                                <plutonium-cm-field 
+                                    id="{{computeItemId(section)}}" 
+                                    model="{{section}}" 
+                                    dialog-id="{{computeDialogId(section)}}">
+                                </plutonium-cm-field>
+                                <br />
+                            </template>
+                        </paper-listbox>
+                    </div>
 
                     <div class="card-content">
                         <paper-fab icon="send" class="horizontal end-justified layout"></paper-fab>    
@@ -112,25 +137,25 @@ Example:
 
                         <paper-dropdown-menu label="Parent">
                             <!--<paper-menu class="layout flex">-->
-                             <paper-listbox id="parentCandidatesList"
-                                       class="dropdown-content"
-                                       attr-for-selected="{{attrForSelected}}"
-                                       multi
-                                       label="Parent"
-                                       items="[[parentCandidates]]"
-                                       as="parent"
-                                       selected="{{selectedParent}}">
-                            <template is="dom-repeat" items="[[parentCandidates]]">
+                            <paper-listbox id="parentCandidatesList"
+                                           class="dropdown-content"
+                                           attr-for-selected="{{attrForSelected}}"
+                                           multi
+                                           label="Parent"
+                                           items="[[parentCandidates]]"
+                                           as="parent"
+                                           selected="{{selectedParent}}">
+                                <template is="dom-repeat" items="[[parentCandidates]]">
 
-                                <paper-item id="[[item.id]]" class="item pad">
-                                    <label>[[item.title]]</label> 
-                                    <label>(<span>[[item.id]]</span>)</label>
-                                </paper-item>
-                            </template>
-                        </paper-listbox>
+                                    <paper-item id="[[item.id]]" class="item pad">
+                                        <label>[[item.title]]</label> 
+                                        <label>(<span>[[item.id]]</span>)</label>
+                                    </paper-item>
+                                </template>
+                            </paper-listbox>
                         </paper-dropdown-menu>
                         <!---->
-                       
+
                         <paper-input class="bottom title" label="Title"></paper-input>
                     </div>
                     <!--</paper-card>-->
@@ -138,32 +163,32 @@ Example:
             </div>
         </paper-card>
         <br />
-        <paper-card heading="Edit content">
-            <div class="card-content">
-                <template is="dom-if" if$="{{isEmpty()}}">
-                          <div class="header">
-                        <paper-material elevation="3" id="plutonium-cm-actions">
-                            <plutonium-cm-field-fabs name$='{{name}}' dialog-id$='{{dialogId}}' ></plutonium-cm-field-fabs>
-                        </paper-material>
+        <!--        <paper-card heading="Edit content">
+                    <div class="card-content">
+                        <template is="dom-if" if$="{{isEmpty()}}">
+                                  <div class="header">
+                                <paper-material elevation="3" id="plutonium-cm-actions">
+                                    <plutonium-cm-field-fabs name$='{{name}}' dialog-id$='{{dialogId}}' ></plutonium-cm-field-fabs>
+                                </paper-material>
+                            </div>
+                        </template>
+        
+                        <content id="cm">
+        
+                        </content>
+        
+                        <paper-listbox selected="0">
+                            <template is="dom-repeat" items="{{contentModel.sections}}" as="section">
+                                <plutonium-cm-field 
+                                    id="{{computeItemId(section)}}" 
+                                    model="{{section}}" 
+                                    dialog-id="{{computeDialogId(section)}}">
+                                </plutonium-cm-field>
+                                <br />
+                            </template>
+                        </paper-listbox>
                     </div>
-                </template>
-
-                <content id="cm">
-
-                </content>
-
-                <paper-listbox selected="0">
-                    <template is="dom-repeat" items="{{contentModel.sections}}" as="section">
-                        <plutonium-cm-field 
-                            id="{{computeItemId(section)}}" 
-                            model="{{section}}" 
-                            dialog-id="{{computeDialogId(section)}}">
-                        </plutonium-cm-field>
-                        <br />
-                    </template>
-                </paper-listbox>
-            </div>
-        </paper-card>
+                </paper-card>-->
 
         <content></content>
     </template>
@@ -172,7 +197,11 @@ Example:
         Polymer({
             is: 'plutonium-cm-form',
             properties: {
-                selectedMetaAction: '0',
+                selectedMetaAction: {
+                    type: Number,
+                    notify: true,
+                    value: 1
+                },
                 parentCandidates: {
                     type: Array,
                     value: [
