@@ -65,7 +65,7 @@ Example:
                 @apply(--layout-horizontal);
             }
 
-            :host paper-material {
+            :host > paper-material {
                 display: inline-block;
                 @apply(--layout-vertical);
                 background-color: white;
@@ -89,25 +89,26 @@ Example:
                 @apply(--paper-card-header-text);
             }
 
-            /*            .cm-fab {
-                            @apply(--layout-vertical);
-                            @apply(--layout-centered);
-                        }
-            
-                        #plutonium-cm-actions {
-                            display: var(--plutonium-cm-actions-display);
-                            margin-left: 20px;
-            
-                        }*/
+            /*                        .cm-fab {
+                                        @apply(--layout-vertical);
+                                        @apply(--layout-centered);
+                                    }*/
+
+            #plutonium-cm-actions {
+                /*                            display: var(--plutonium-cm-actions-display);
+                                            margin-left: 20px;*/
+                @apply(--layout-horizontal);
+                @apply(--layout-end-justified);
+            }
 
         </style>
         <template is="dom-if" if="{{!sectionDisplay}}">
             <paper-material elevation="2">
                 <div class="header">
-                    <label class="title-text">{{model.key}}</label>
-                    <paper-material elevation="3" id="plutonium-cm-actions">
+                    <paper-input label="Title" class="title-text">{{model.key}}</paper-input>
+                    <!--<paper-material elevation="3" id="plutonium-cm-actions">-->
                         <plutonium-cm-field-fabs name$='{{name}}' dialog-id$='{{dialogId}}' ></plutonium-cm-field-fabs>
-                    </paper-material>
+                    <!--</paper-material>-->
                 </div>
                 <div class="card-content">
                     <content></content>

@@ -13,6 +13,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../iron-image/iron-image.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../iron-list/iron-list.html">
+<link rel="import" href="../iron-pages/iron-pages.html">
 <link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../paper-material/paper-material.html">
 <link rel="import" href="../paper-card/paper-card.html">
@@ -21,6 +22,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../paper-dialog/paper-dialog.html">
 <link rel="import" href="../paper-item/paper-item.html">
+<link rel="import" href="../paper-tabs/paper-tabs.html">
 <link rel="import" href="../paper-listbox/paper-listbox.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../plutonium-field-recipient/plutonium-field-recipient.html">
@@ -67,38 +69,79 @@ Example:
                                 @apply(--layout-centered);*/
             }
         </style>
-
-        <paper-card heading="Share with">
-
-            <paper-fab icon="send" class="horizontal end-justified layout"></paper-fab>    
-
+        <paper-card>
             <div class="card-content">
-                <plutonium-field-recipient
-                    label="To"
-                    picker-icon="supervisor-account"
-                    picker-title="Contacts"
-                    picker-button-tooltip="Choose contacts."
-                    clear-icon="clear"
-                    clear-button-tooltip="Clear recipients input."
-                    attr-for-selected="id"
-                    as="item"
-                    items="[[contacts]]">
-                    <template is="dom-repeat" items="[[contacts]]">
-                        <paper-item id="[[item.id]]" class="item pad">
-                            <label>[[item.name]]</label> 
-                            <label>(<span>[[item.email]]</span>)</label>
-                        </paper-item>
-                    </template>
-                </plutonium-field-recipient>
+                <paper-tabs selected="{{selectedMetaAction}}">
+                    <paper-tab>Share</paper-tab>
+                    <paper-tab>Properties</paper-tab>
+                </paper-tabs>
 
-                <paper-input class="bottom title" label="Title"></paper-input>
+                <iron-pages selected$="{{selectedMetaAction}}">
+                            <!--            <paper-card heading="Share with">-->
+
+                            <div>
+                        <paper-fab icon="send" class="horizontal end-justified layout"></paper-fab>    
+
+                        <plutonium-field-recipient
+                            label="To"
+                            picker-icon="supervisor-account"
+                            picker-title="Contacts"
+                            picker-button-tooltip="Choose contacts."
+                            clear-icon="clear"
+                            clear-button-tooltip="Clear recipients input."
+                            attr-for-selected="id"
+                            as="item"
+                            items="[[contacts]]">
+                            <template is="dom-repeat" items="[[contacts]]">
+                                <paper-item id="[[item.id]]" class="item pad">
+                                    <label>[[item.name]]</label> 
+                                    <label>(<span>[[item.email]]</span>)</label>
+                                </paper-item>
+                            </template>
+                        </plutonium-field-recipient>
+
+                        <paper-input class="bottom title" label="Message"></paper-input>
+                    </div>
+                    <!--</paper-card>-->
+
+                    <!--<paper-card heading="Share with">-->
+
+                    <div class="card-content">
+                        <paper-fab icon="send" class="horizontal end-justified layout"></paper-fab>    
+
+
+                        <paper-dropdown-menu label="Parent">
+                            <!--<paper-menu class="layout flex">-->
+                             <paper-listbox id="parentCandidatesList"
+                                       class="dropdown-content"
+                                       attr-for-selected="{{attrForSelected}}"
+                                       multi
+                                       label="Parent"
+                                       items="[[parentCandidates]]"
+                                       as="parent"
+                                       selected="{{selectedParent}}">
+                            <template is="dom-repeat" items="[[parentCandidates]]">
+
+                                <paper-item id="[[item.id]]" class="item pad">
+                                    <label>[[item.title]]</label> 
+                                    <label>(<span>[[item.id]]</span>)</label>
+                                </paper-item>
+                            </template>
+                        </paper-listbox>
+                        </paper-dropdown-menu>
+                        <!---->
+                       
+                        <paper-input class="bottom title" label="Title"></paper-input>
+                    </div>
+                    <!--</paper-card>-->
+                </iron-pages>
             </div>
         </paper-card>
         <br />
         <paper-card heading="Edit content">
             <div class="card-content">
                 <template is="dom-if" if$="{{isEmpty()}}">
-                    <div class="header">
+                          <div class="header">
                         <paper-material elevation="3" id="plutonium-cm-actions">
                             <plutonium-cm-field-fabs name$='{{name}}' dialog-id$='{{dialogId}}' ></plutonium-cm-field-fabs>
                         </paper-material>
@@ -129,6 +172,15 @@ Example:
         Polymer({
             is: 'plutonium-cm-form',
             properties: {
+                selectedMetaAction: '0',
+                parentCandidates: {
+                    type: Array,
+                    value: [
+                        {id: '1', title: 'Root'},
+                        {id: '2', title: 'Contents for demo'},
+                        {id: '3', title: 'Contents for saling'}
+                    ]
+                },
                 /**
                  * Data-model of th form.
                  */
@@ -158,6 +210,7 @@ Example:
             observers: [
                 'updateFields(editors, contentModel)',
                 'renderContent(contentModel)',
+                'observeSections(contentModel.sections.splices)'
             ],
             // Element Lifecycle
             ready: function () {
@@ -233,12 +286,22 @@ Example:
             onRefresh: function (e) {
                 this.renderContent(this.contentModel);
             },
+            observeSections: function (splices) {
+                console.log('Observe content sections.');
+            },
             onCreateSection: function (e) {
-                console.log('Create new ' + JSON.stringify(e.detail.type) + ' section ' + JSON.stringify(e.detail.key));
-                var el = document.createElement(e.detail.type);
-                el.setAttribute('name', "property-" + this.contentModel.sections.length);
-                el.name = e.detail.key;
-                Polymer.dom(this.root).appendChild(el);
+                console.log('Create new ' + JSON.stringify(e.detail.type) + ' section ' + JSON.stringify(e.detail.type));
+                this.push('contentModel.sections', {
+                    type: e.detail.type,
+                    key: 'key',
+                    data: ''
+                });
+//                this.contentModel
+//                var el = document.createElement(e.detail.type);
+//                el.setAttribute('name', "property-" + this.contentModel.sections.length);
+//                el.name = e.detail.key;
+//                Polymer.dom(this.$.cm).appendChild(el);
+//                Polymer.dom.flush()
             },
             onRemoveSection: function (e) {
                 console.log('Remove section ' + JSON.stringify(e.detail.key));
@@ -250,7 +313,6 @@ Example:
                                 return false;
                         })[0]), 1);
                 e.target.parentNode.parentNode.remove();
-                //                this.indexPropertySections();
             }
         });
     </script>
