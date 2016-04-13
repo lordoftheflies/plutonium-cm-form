@@ -28,6 +28,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../plutonium-field-recipient/plutonium-field-recipient.html">
 
 <link rel="import" href="plutonium-cm-field.html">
+<link rel="import" href="plutonium-cm-form.html">
+<link rel="import" href="plutonium-cm-editor-text.html">
+<link rel="import" href="plutonium-cm-editor-image.html">
+<link rel="import" href="plutonium-cm-editor-link.html">
+<link rel="import" href="plutonium-cm-editor-video.html">
+<link rel="import" href="plutonium-cm-field.html">
 <link rel="import" href="plutonium-cm-shared-styles.html">
 
 <!--
@@ -77,18 +83,16 @@ Example:
                         <paper-tab>Content</paper-tab>
                         <paper-tab>Properties</paper-tab>
                     </paper-tabs>
-                    <template is="dom-if" if$="{{isEmpty()}}">
-                              <plutonium-cm-field-fabs class="end-justified" name$='{{name}}' dialog-id$='{{dialogId}}' ></plutonium-cm-field-fabs>
-                    </template>
+
                 </paper-material>
             </div>
             <div class="card-content">
 
 
                 <iron-pages selected="{{selectedMetaAction}}">
-                            <!--            <paper-card heading="Share with">-->
+                    <!--            <paper-card heading="Share with">-->
 
-                            <div>
+                    <div>
                         <paper-fab icon="send" class="horizontal end-justified layout"></paper-fab>    
 
                         <plutonium-field-recipient
@@ -113,7 +117,9 @@ Example:
                     </div>
 
                     <div class="card-content">
-
+                        <template is="dom-if" if$="{{isEmpty()}}">
+                                  <plutonium-cm-field-fabs class="end-justified" name$='{{name}}' dialog-id$='{{dialogId}}' ></plutonium-cm-field-fabs>
+                        </template>
 
                         <content id="cm">
 
