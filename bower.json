@@ -46,7 +46,8 @@
     "plutonium-field-recipient": "git@github.com:lordoftheflies/plutonium-field-recipient.git#master",
     "paper-dialog-scrollable": "polymerelements/paper-dialog-scrollable#^1.1.4",
     "paper-tabs": "polymerelements/paper-tabs#^1.5.0",
-    "iron-pages": "polymerelements/iron-pages#^1.0.7"
+    "iron-pages": "polymerelements/iron-pages#^1.0.7",
+    "paper-radio-button": "polymerelements/paper-radio-button#^1.1.2"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
