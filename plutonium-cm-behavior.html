@@ -40,36 +40,43 @@
                 notify: true
             }
         },
-        listeners: {
-            'showEditor': 'onShowEditor',
-            'removeSection': 'onRemoveSection',
-//            'addSection': 'onAddSection',
-//            'embedVideo': 'onEmbedVideo',
-//            'embedImage': 'onEmbedImage',
-//            'embedLink': 'onEmbedLink',
-            'mouseover': 'onHovered',
-            'mouseout': 'onUnhovered',
-//            'moveUpSection:': 'onMoveUpSection',
-//            'moveDownSection:': 'onMoveDownSection'
-        },
+//        listeners: {
+//            'show-editor': 'onShowEditor',
+//            'on-remove-section': 'onRemoveSection',
+//            'on-add-section': 'onAddSection',
+//            'actionContainer.on-embed-video': 'onEmbedVideo',
+//            'actionContainer.onEmbedImage': 'onEmbedImage',
+//            'onEmbedLink': 'onEmbedLink',
+//            'onHovered': 'onHovered',
+//            'onUnhovered': 'onUnhovered',
+//            'onMoveUpSection': 'onMoveUpSection',
+//            'onMoveDownSection': 'onMoveDownSection'
+//        },
         ready: function () {
             this.customStyle['--plutonium-cm-field-display'] = 'inline-block';
-
+            console.log('PLUTONIUM-CM-FAB ---------------');
+            console.log('\tDialog id: ' + this.dialogId);
+            console.log('\tName: ' + this.name);
+            console.log('\tInline: ' + this.inlineEditor);
+            console.log('--------------------------------');
             console.log('plutonium-field[' + this.name + '] is ready.');
             console.log('\tstate: ' + (this.inlineEditor === true ? 'inline' : 'dialog') + ', ' + (this._edited === true ? 'editor' : 'preview'));
-        },
+    
+    },
         onRemoveSection: function () {
             console.log('Remove field[' + this.name + ']');
             this.fire('remove', {
-                key: this.name
+                name: this.name
             });
         },
         onShowEditor: function (model) {
             this._edited = true;
             this.data = model;
             if (this.inlineEditor === false) {
-                console.log('Open field[' + Polymer.dom(this).parentNode.parentNode.name + '] editor in a dialog.');
-                Polymer.dom(this).parentNode.parentNode.$$('#' + this.dialogId).open();
+                console.log('Open field[' + this.name + '] editor in a dialog.');
+//                Polymer.dom(this).parentNode.parentNode.$$('#' + this.dialogId).open();
+                
+                document.querySelector('#' + this.dialogId).open();
             } else {
                 console.log('Show field[' + this.name + '] editor inline.');
             }
@@ -99,23 +106,42 @@
         onAddSection: function () {
             console.log('Add section after field[' + Polymer.dom(this).parentNode.parentNode.name + ']');
             this.fire('create', {
-                type: 'plutonium-cm-text'
+                name: this.name,
+                type: 'plutonium-cm-editor-text'
             });
         },
         onEmbedVideo: function () {
-            console.log('Embed video to after field[' + Polymer.dom(this).parentNode.parentNode.name + ']');
+            console.log('Embed video to after field[' + this.name + ']');
+            this.fire('create', {
+                name: this.name,
+                type: 'plutonium-cm-editor-video'
+            });
         },
         onEmbedImage: function () {
-            console.log('Embed image to after field[' + Polymer.dom(this).parentNode.parentNode.name + ']');
+            console.log('Embed image to after field[' + this.name + ']');
+            this.fire('create', {
+                name: this.name,
+                type: 'plutonium-cm-editor-image'
+            });
         },
         onEmbedLink: function () {
-            console.log('Embed link to after field[' + Polymer.dom(this).parentNode.parentNode.name + ']');
+            console.log('Embed link to after field[' + this.name + ']');
+            this.fire('create', {
+                name: this.name,
+                type: 'plutonium-cm-editor-link'
+            });
         },
         onMoveUpSection: function () {
-            console.log('Move up field[' + Polymer.dom(this).parentNode.parentNode.name + ']');
+            console.log('Move up field[' + this.name + ']');
+            this.fire('moveupsection', {
+                name: this.name
+            });
         },
         onMoveDownSection: function () {
-            console.log('Move down field[' + Polymer.dom(this).parentNode.parentNode.name + ']');
+            console.log('Move down field[' + this.name + ']');
+            this.fire('movedownsection', {
+                name: this.name
+            });
         }
     };
 </script>

@@ -28,7 +28,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../plutonium-field-recipient/plutonium-field-recipient.html">
 
 <link rel="import" href="plutonium-cm-field.html">
-<link rel="import" href="plutonium-cm-form.html">
 <link rel="import" href="plutonium-cm-editor-text.html">
 <link rel="import" href="plutonium-cm-editor-image.html">
 <link rel="import" href="plutonium-cm-editor-link.html">
@@ -128,7 +127,7 @@ Example:
                         <paper-listbox selected="0">
                             <template is="dom-repeat" items="{{contentModel.sections}}" as="section">
                                 <plutonium-cm-field 
-                                    id="{{computeItemId(section)}}" 
+                                    name="{{computeItemId(section)}}" 
                                     model="{{section}}" 
                                     dialog-id="{{computeDialogId(section)}}">
                                 </plutonium-cm-field>
@@ -238,9 +237,11 @@ Example:
                 }
             },
             listeners: {
-                'remove': 'onRemoveSection',
-                'create': 'onCreateSection',
-                'iron-items-changed': 'onRefresh'
+                'create': 'onCreateSectionInParent',
+                'remove': 'onRemoveSectionInParent',
+                'iron-items-changed': 'onRefresh',
+                'moveupsection': 'onMoveUpSectionInParent',
+                'movedownsection': 'onMoveDownSectionInParent'
             },
             observers: [
                 'updateFields(editors, contentModel)',
@@ -256,6 +257,8 @@ Example:
                 // This is the point where you should make modifications to the DOM (when
                 // necessary), or kick off any processes the element wants to perform.
                 console.log("Form is ready, initialize classification ...");
+
+
                 //                this.renderContent(this.contentModel);
             },
             attached: function () {
@@ -279,7 +282,13 @@ Example:
                         || this.contentModel.sections.length === 0;
             },
             computeItemId: function (item) {
-                return 'section' + this.contentModel.sections.indexOf(item);
+                if (item.name === undefined || item.name === null) {
+                    var id = 'section' + this.contentModel.sections.indexOf(item);
+                    console.log('Compute item id=' + id);
+                    return id;
+                } else {
+                    return item.name;
+                }
             },
             computeDialogId: function (item) {
                 console.log('------------------------------------------' + JSON.stringify(this.editors) + '||||||' + this.editors[item.type]);
@@ -323,12 +332,14 @@ Example:
             },
             observeSections: function (splices) {
                 console.log('Observe content sections.');
+
             },
-            onCreateSection: function (e) {
+            onCreateSectionInParent: function (e) {
                 console.log('Create new ' + JSON.stringify(e.detail.type) + ' section ' + JSON.stringify(e.detail.type));
                 this.push('contentModel.sections', {
                     type: e.detail.type,
-                    key: 'key',
+                    name: 'section' + this.contentModel.sections.length,
+                    title: '',
                     data: ''
                 });
 //                this.contentModel
@@ -338,16 +349,58 @@ Example:
 //                Polymer.dom(this.$.cm).appendChild(el);
 //                Polymer.dom.flush()
             },
-            onRemoveSection: function (e) {
-                console.log('Remove section ' + JSON.stringify(e.detail.key));
-                this.splice('contentModel.sections', this.contentModel.sections.indexOf(
-                        this.contentModel.sections.filter(function (section) {
-                            if (section.name === e.detail.key)
-                                return true;
-                            else
-                                return false;
-                        })[0]), 1);
-                e.target.parentNode.parentNode.remove();
+            onRemoveSectionInParent: function (e) {
+                var index = this.indexOfSection(e.detail.name);
+                console.log('Remove section ' + e.detail.name + ' from index ' + index);
+                this.splice('contentModel.sections', index, 1);
+            },
+            onMoveUpSectionInParent: function (e) {
+                var index = this.indexOfSection(e.detail.name);
+                var s = [];
+                if (index - 1 >= 0) {
+                    s = this.splice('contentModel.sections', index - 1, this.contentModel.sections.length - index + 1);
+                    var first = s[0];
+                    var second = s[1];
+                    var tail = s.filter(function (value, index, arr) {
+                        return index > 1;
+                    }, this);
+                    this.push('contentModel.sections', second, first);
+                    tail.forEach(function (value, index, arr) {
+                        this.push('contentModel.sections', value);
+                    }, this);
+                } else {
+                    s = this.splice('contentModel.sections', 0, 1);
+                    this.push('contentModel.sections', s[0]);
+                }
+            },
+            onMoveDownSectionInParent: function (e) {
+                var index = this.indexOfSection(e.detail.name);
+                var s = [];
+                if (index < this.contentModel.sections.length - 1) {
+                    s = this.splice('contentModel.sections', index, this.contentModel.sections.length - index);
+                    var first = s[0];
+                    var second = s[1];
+                    var tail = s.filter(function (value, index, arr) {
+                        return index > 1;
+                    }, this);
+                    this.push('contentModel.sections', second, first);
+                    tail.forEach(function (value, index, arr) {
+                        this.push('contentModel.sections', value);
+                    }, this);
+                } else {
+                    s = this.splice('contentModel.sections', 0, this.contentModel.sections.length - 1);
+                    s.forEach(function (value, index, arr) {
+                        this.push('contentModel.sections', value);
+                    }, this);
+                }
+            },
+            indexOfSection: function (name) {
+                var s = this.contentModel.sections;
+                var index = s.indexOf(
+                        s.filter(function (section) {
+                            return (section.name === name);
+                        }, this)[0]);
+                return index;
             }
         });
     </script>

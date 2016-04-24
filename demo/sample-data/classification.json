@@ -2,27 +2,32 @@
     "sections": [
         {
             "type": "plutonium-cm-editor-video",
-            "key": "first",
+            "title": "title-first",
+            "name": "first",
             "data": "Si4BM7QOWXI"
         },
         {
             "type": "plutonium-cm-editor-text",
-            "key": "second",
+            "title": "title-second",
+            "name": "second",
             "data": "Si4BM7QOWXI"
         },
         {
             "type": "plutonium-cm-editor-image",
-            "key": "third",
+            "name": "third",
+            "title": "title-thrid",
             "data": "https://www.google.hu/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&ved=0ahUKEwjGifff4qXLAhWFNpoKHX4XBssQjRwIBw&url=http%3A%2F%2Fwww.trademagazin.hu%2Fhirek-es-cikkek%2Fpiaci-hirek%2Fszeretjuk-a-kacsahust.html&psig=AFQjCNHKGebKo-p4MfAbQfxvxMKMgTF_jg&ust=1457137611971834"
         },
         {
             "type": "plutonium-cm-editor-link",
-            "key": "linkkkk",
+            "name": "linkkkk",
+            "title": "title-link",
             "data": "https://www.google.hu"
         },
         {
             "type": "plutonium-cm-editor-text",
-            "key": "fourth",
+            "name": "fourth",
+            "title": "title-foru",
             "data": "Semmi különös"
         }
     ]

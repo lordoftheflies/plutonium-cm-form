@@ -40,7 +40,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                content-model$="{{classification}}"
                                editors='{ "plutonium-cm-editor-image": "imageEditorDialog", "plutonium-cm-editor-link": "linkEditorDialog", "plutonium-cm-editor-text": "textEditorDialog", "plutonium-cm-editor-video": "videoEditorDialog" }'>
 
-                <template>
+                               <template>
                     {{title}}
                     {{item}}
                 </template>
@@ -86,120 +86,132 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     </div>
                 </paper-dialog>
 
-                
-
-                <paper-dialog id="videoEditorDialog" modal class="editor">
-                    <h2>Edit video properties</h2>
-                    <div class="content">
-                        <paper-input label='Title' value="{{title}}">
-
-                        </paper-input>
-                        <paper-input required auto-validate
-                                     label='Video url'
-                                     error-message='Invalid Youtube url.'
-                                     value="{{url}}">
-
-                        </paper-input>
-                    </div>
-                    <div class="buttons">
-                        <paper-button dialog-dismiss>Cancel</paper-button>
-                        <paper-button dialog-confirm on-tap='onAccept'>Accept</paper-button>
-                    </div>
-                </paper-dialog>   
-
-            </plutonium-cm-form>
-
-
-
-            <h2>Editor #2</h2>
-            <plutonium-cm-form id="contentEditor2" style="width: 100%"
-                               contacts$="{{contacts}}"
-                               content-model='{ "sections": [] }'
-                               editors='{ "plutonium-cm-editor-image": "imageEditorDialog", "plutonium-cm-editor-link": "linkEditorDialog", "plutonium-cm-editor-text": "textEditorDialog", "plutonium-cm-editor-video": "videoEditorDialog" }'>
-
-                               <paper-dialog id="imageEditorDialog" modal class="editor">
-                    <h2>Edit image properties</h2>
-                    <div class="content">
-                        <paper-input label="Title" value="{{title}}"></paper-input>
-
-                        <paper-input required auto-validate
-                                     label="Image url"
-                                     value="{{data}}">
-
-                        </paper-input>
-                    </div>
-                    <div class="buttons">
-                        <paper-button dialog-dismiss>Cancel</paper-button>
-                        <paper-button dialog-confirm>Accept</paper-button>
-                    </div>
-                </paper-dialog>
-
-                <paper-dialog id="linkEditorDialog" class="editor">
-                    <h2>Edit link properties</h2>
-                    <div class="content">
-                        <paper-input label="Title" value="{{title}}"></paper-input>
-
-                        <input name="data" type="hidden" value="{{data}}" />
-                        <paper-dropdown-menu label="Reference">
-                            <paper-menu
-                                class="dropdown-content" selected="{{data}}" attr-for-selected="value"
-                                attr-for-selected="id">
-                                <template is="dom-repeat" items="{{shareableContents}}">
-                                    <paper-item value="{{item.id}}">{{item.name}}</paper-item>
-                                </template>
-                            </paper-menu>
-                        </paper-dropdown-menu>
-
-                        </paper-input>
-                    </div>
-                    <div class="buttons">
-                        <paper-button dialog-dismiss>Cancel</paper-button>
-                        <paper-button dialog-confirm>Accept</paper-button>
-                    </div>
-                </paper-dialog>
-
                 <paper-dialog id="textEditorDialog" class="editor">
                     <h2>Edit text properties</h2>
                     <div class="content">
-                        <paper-input label="Title" value="{{title}}">
-                        </paper-input>
-                        <paper-textarea label="Text" value="{{data}}" rows="10" type="text"></paper-textarea>
+                        <paper-input label="Title" value$="{{title}}">
+                    </paper-input>
+                    <paper-textarea label="Text" value$="{{data}}" rows="10" type="text"></paper-textarea>
 
-                    </div>
-                    <div class="buttons">
-                        <paper-button dialog-dismiss>Cancel</paper-button>
-                        <paper-button dialog-confirm>Accept</paper-button>
-                    </div>
-                </paper-dialog>
+                </div>
+                <div class="buttons">
+                    <paper-button dialog-dismiss>Cancel</paper-button>
+                    <paper-button dialog-confirm>Accept</paper-button>
+                </div>
+            </paper-dialog>
 
-                <paper-dialog id="videoEditorDialog" modal class="editor">
-                    <h2>Edit video properties</h2>
-                    <div class="content">
-                        <paper-input label='Title' value="{{title}}">
+            <paper-dialog id="videoEditorDialog" modal class="editor">
+                <h2>Edit video properties</h2>
+                <div class="content">
+                    <paper-input label='Title' value="{{title}}">
 
-                        </paper-input>
-                        <paper-input required auto-validate
-                                     label='Video url'
-                                     error-message='Invalid Youtube url.'
-                                     value="{{url}}">
+                    </paper-input>
+                    <paper-input required auto-validate
+                                 label='Video url'
+                                 error-message='Invalid Youtube url.'
+                                 value="{{url}}">
 
-                        </paper-input>
-                    </div>
-                    <div class="buttons">
-                        <paper-button dialog-dismiss>Cancel</paper-button>
-                        <paper-button dialog-confirm on-tap='onAccept'>Accept</paper-button>
-                    </div>
-                </paper-dialog>   
+                    </paper-input>
+                </div>
+                <div class="buttons">
+                    <paper-button dialog-dismiss>Cancel</paper-button>
+                    <paper-button dialog-confirm on-tap='onAccept'>Accept</paper-button>
+                </div>
+            </paper-dialog>   
 
-            </plutonium-cm-form>
+        </plutonium-cm-form>
 
-            <h2>Content display</h2>
-            <plutonium-cm-section id="contentDisplay"  content-model="{{classification}}">
 
-            </plutonium-cm-section>
 
-        </template>
-        <script>
+        <h2>Editor #2</h2>
+        <plutonium-cm-form id="contentEditor2" style="width: 100%"
+                           contacts$="{{contacts}}"
+                           content-model='{ "sections": [] }'
+                           editors='{ "plutonium-cm-editor-image": "imageEditorDialog", "plutonium-cm-editor-link": "linkEditorDialog", "plutonium-cm-editor-text": "textEditorDialog", "plutonium-cm-editor-video": "videoEditorDialog" }'>
+
+                           <paper-dialog id="imageEditorDialog" modal class="editor">
+                <h2>Edit image properties</h2>
+                <div class="content">
+                    <paper-input label="Title" value="{{title}}"></paper-input>
+
+                    <paper-input required auto-validate
+                                 label="Image url"
+                                 value="{{data}}">
+
+                    </paper-input>
+                </div>
+                <div class="buttons">
+                    <paper-button dialog-dismiss>Cancel</paper-button>
+                    <paper-button dialog-confirm>Accept</paper-button>
+                </div>
+            </paper-dialog>
+
+            <paper-dialog id="linkEditorDialog" class="editor">
+                <h2>Edit link properties</h2>
+                <div class="content">
+                    <paper-input label="Title" value="{{title}}"></paper-input>
+
+                    <input name="data" type="hidden" value="{{data}}" />
+                    <paper-dropdown-menu label="Reference">
+                        <paper-menu
+                            class="dropdown-content" selected="{{data}}" attr-for-selected="value"
+                            attr-for-selected="id">
+                            <template is="dom-repeat" items="{{shareableContents}}">
+                                <paper-item value="{{item.id}}">{{item.name}}</paper-item>
+                            </template>
+                        </paper-menu>
+                    </paper-dropdown-menu>
+
+                    </paper-input>
+                </div>
+                <div class="buttons">
+                    <paper-button dialog-dismiss>Cancel</paper-button>
+                    <paper-button dialog-confirm>Accept</paper-button>
+                </div>
+            </paper-dialog>
+
+            <paper-dialog id="textEditorDialog" class="editor">
+                <h2>Edit text properties</h2>
+                <div class="content">
+                    <paper-input label="Title" value="{{title}}">
+                    </paper-input>
+                    <paper-textarea label="Text" value="{{data}}" rows="10" type="text"></paper-textarea>
+
+                </div>
+                <div class="buttons">
+                    <paper-button dialog-dismiss>Cancel</paper-button>
+                    <paper-button dialog-confirm>Accept</paper-button>
+                </div>
+            </paper-dialog>
+
+            <paper-dialog id="videoEditorDialog" modal class="editor">
+                <h2>Edit video properties</h2>
+                <div class="content">
+                    <paper-input label='Title' value="{{title}}">
+
+                    </paper-input>
+                    <paper-input required auto-validate
+                                 label='Video url'
+                                 error-message='Invalid Youtube url.'
+                                 value="{{url}}">
+
+                    </paper-input>
+                </div>
+                <div class="buttons">
+                    <paper-button dialog-dismiss>Cancel</paper-button>
+                    <paper-button dialog-confirm on-tap='onAccept'>Accept</paper-button>
+                </div>
+            </paper-dialog>   
+
+        </plutonium-cm-form>
+
+        <h2>Content display</h2>
+        <plutonium-cm-section id="contentDisplay"  content-model="{{classification}}">
+
+        </plutonium-cm-section>
+
+    </template>
+    <script>
 HTMLImports.whenReady(function () {
 
     document.getElementById('applyButton').addEventListener('click', function () {
@@ -218,7 +230,7 @@ HTMLImports.whenReady(function () {
 //            console.log(e.detail.sound);
 //        });
 
-        </script>
+    </script>
 
-    </body>
+</body>
 </html>

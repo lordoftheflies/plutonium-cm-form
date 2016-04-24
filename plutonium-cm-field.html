@@ -17,10 +17,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="plutonium-cm-behavior.html">
-<link rel="import" href="plutonium-cm-field-fabs.html">
 <link rel="import" href="plutonium-cm-shared-styles.html">
-<!--<link rel="import" href="plutonium-youtube-url-input.html">-->
-
 <!--
 An element providing a solution to no problem in particular.
 
@@ -89,6 +86,11 @@ Example:
                 @apply(--paper-card-header-text);
             }
 
+            :host #actionContainer {
+                @apply(--layout-horizontal);
+                @apply(--layout-centered);
+            }
+
             /*                        .cm-fab {
                                         @apply(--layout-vertical);
                                         @apply(--layout-centered);
@@ -106,7 +108,17 @@ Example:
             <paper-material elevation="2">
                 <div class="header">
                     <label label="Title" class="title-text">[[title]]</label>
-                    <plutonium-cm-field-fabs name$='{{name}}' dialog-id$='{{dialogId}}' ></plutonium-cm-field-fabs>
+                    <!--<plutonium-cm-field-fabs id="actionContainer" name$='{{name}}' dialog-id$='{{dialogId}}' ></plutonium-cm-field-fabs>-->
+                    <div id="actionContainer">
+                        <paper-icon-button on-click="onMoveUpSection" icon="expand-less" raised></paper-icon-button>
+                        <paper-icon-button on-click="onAddSection" icon="add-circle" title="Embedd video to the message content."></paper-icon-button>
+                        <paper-icon-button on-click="onEmbedVideo" icon="theaters" title="Embedd video to the message content."></paper-icon-button>
+                        <paper-icon-button on-click="onEmbedImage" icon="perm-media" title="Embedd image to the message content."></paper-icon-button>
+                        <paper-icon-button on-click="onEmbedLink" icon="link" title="Embedd a link to another message to the message content."></paper-icon-button>
+                        <paper-icon-button on-click="onShowEditor" icon="create" raised></paper-icon-button>
+                        <paper-icon-button on-click="onRemoveSection" icon="delete"></paper-icon-button>
+                        <paper-icon-button on-click="onMoveDownSection" icon="expand-more" raised></paper-icon-button>
+                    </div>
                 </div>
                 <div class="card-content">
                     <content></content>
@@ -135,17 +147,13 @@ Example:
                         type: String,
                         notify: true
                     },
-                    id: {
-                        type: String,
-                        notify: true
-                    },
                     model: {
                         type: Object,
                         notify: true
                     }
                 },
                 listeners: {
-                    'removeSection': 'removeSection',
+//                    'removeSection': 'removeSection',
                     'render': 'onRender'
                 },
                 // Element Lifecycle
@@ -207,10 +215,10 @@ Example:
                     'renderByModel(model, id, dialogId)'
                 ],
                 computeTitle: function (model) {
-                    this.title = model.key;
+                    this.title = model.title;
                 },
                 renderByModel: function (model, id, dialogId) {
-                    var selector = model.type + '[name="' + model.key + '"]';
+                    var selector = model.type + '[name="' + model.name + '"]';
                     var element = Polymer.dom(this).querySelector(selector);
                     console.log('\t- Section #' + id + '-#' + this.dialogId + ': ' + JSON.stringify(this.model));
 
@@ -222,8 +230,6 @@ Example:
                         Polymer.dom(element).setAttribute('dialog-id', dialogId);
 
                         Polymer.dom(this).appendChild(element);
-
-
                     }
                 },
                 onRender: function () {
