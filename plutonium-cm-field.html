@@ -16,7 +16,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../iron-icon/iron-icon.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../paper-button/paper-button.html">
-<link rel="import" href="plutonium-cm-editor-behavior.html">
+<link rel="import" href="plutonium-cm-behavior.html">
 <link rel="import" href="plutonium-cm-field-fabs.html">
 <link rel="import" href="plutonium-cm-shared-styles.html">
 <!--<link rel="import" href="plutonium-youtube-url-input.html">-->
@@ -105,10 +105,8 @@ Example:
         <template is="dom-if" if="{{!sectionDisplay}}">
             <paper-material elevation="2">
                 <div class="header">
-                    <paper-input label="Title" class="title-text">{{model.key}}</paper-input>
-                    <!--<paper-material elevation="3" id="plutonium-cm-actions">-->
-                        <plutonium-cm-field-fabs name$='{{name}}' dialog-id$='{{dialogId}}' ></plutonium-cm-field-fabs>
-                    <!--</paper-material>-->
+                    <label label="Title" class="title-text">[[title]]</label>
+                    <plutonium-cm-field-fabs name$='{{name}}' dialog-id$='{{dialogId}}' ></plutonium-cm-field-fabs>
                 </div>
                 <div class="card-content">
                     <content></content>
@@ -205,8 +203,12 @@ Example:
                 observers: [
                     '_extractId(url)',
                     '_computeUrl(data)',
+                    'computeTitle(model)',
                     'renderByModel(model, id, dialogId)'
                 ],
+                computeTitle: function (model) {
+                    this.title = model.key;
+                },
                 renderByModel: function (model, id, dialogId) {
                     var selector = model.type + '[name="' + model.key + '"]';
                     var element = Polymer.dom(this).querySelector(selector);

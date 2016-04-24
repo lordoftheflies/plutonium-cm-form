@@ -34,7 +34,7 @@
             this.data = model;
             if (this.inlineEditor === false) {
                 console.log('Open field[' + this.name + '] editor in a dialog.');
-                document.querySelector('#' + this.dialogId).open();
+                Polymer.dom(this.root).querySelector('#' + this.dialogId).open();
             } else {
                 console.log('Show field[' + this.name + '] editor inline.');
             }
