@@ -97,7 +97,7 @@ Example:
                     <!--            <paper-card heading="Share with">-->
 
                     <div>
-                        <paper-fab icon="send" class="horizontal end-justified layout"></paper-fab>    
+                        <paper-fab icon="send" class="horizontal end-justified layout" on-tap="onSend"></paper-fab>    
 
                         <plutonium-field-recipient
                             label="To"
@@ -117,7 +117,7 @@ Example:
                             </template>
                         </plutonium-field-recipient>
 
-                        <paper-input class="bottom title" label="Message"></paper-input>
+                        <paper-input class="bottom title" label="Message" value="{{message}}"></paper-input>
                     </div>
 
                     <div class="card-content">
@@ -173,7 +173,7 @@ Example:
                     </paper-dropdown-menu>
                     <!---->
 
-                    <paper-input class="bottom title" label="Title"></paper-input>
+                    <paper-input class="bottom title" label="Title" value="{{contentModel.title}}"></paper-input>
                 </div>
                 <!--</paper-card>-->
             </iron-pages>
@@ -250,6 +250,10 @@ Example:
             },
             editors: {
                 type: Object,
+                notify: true
+            },
+            message: {
+                type: String,
                 notify: true
             }
         },
@@ -477,6 +481,13 @@ Example:
             this.fire('create', {
                 name: 'section' + this.contentModel.sections.length,
                 type: 'plutonium-cm-editor-link'
+            });
+        },
+        onSend: function() {
+            this.fire('share', {
+                content: this.contentModel,
+                recipients: this.selectedContactIds,
+                message: this.message
             });
         }
     });
