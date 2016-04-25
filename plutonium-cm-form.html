@@ -62,6 +62,11 @@ Example:
                 /*@apply(--layout-vertical);*/
             }
 
+            paper-dialog {
+                /*@apply(--layout-horizontal);*/
+                width: 50%;
+            }
+
             paper-fab {
                 --paper-fab: {
                     @apply(--layout-horizontal);
@@ -124,284 +129,321 @@ Example:
 
                         </content>
 
-                        <paper-listbox selected="0">
+                        <paper-listbox selected="{{selectedSection}}">
                             <template is="dom-repeat" items="{{contentModel.sections}}" as="section">
                                 <plutonium-cm-field 
-                                    name="{{computeItemId(section)}}" 
+                                    name$="{{computeItemId(section)}}" 
                                     model="{{section}}" 
                                     dialog-id="{{computeDialogId(section)}}">
-                                </plutonium-cm-field>
-                                <br />
-                            </template>
-                        </paper-listbox>
-                    </div>
-
-                    <div class="card-content">
-                        <paper-fab icon="send" class="horizontal end-justified layout"></paper-fab>    
-
-
-                        <paper-dropdown-menu label="Parent">
-                            <!--<paper-menu class="layout flex">-->
-                            <paper-listbox id="parentCandidatesList"
-                                           class="dropdown-content"
-                                           attr-for-selected="{{attrForSelected}}"
-                                           multi
-                                           label="Parent"
-                                           items="[[parentCandidates]]"
-                                           as="parent"
-                                           selected="{{selectedParent}}">
-                                <template is="dom-repeat" items="[[parentCandidates]]">
-
-                                    <paper-item id="[[item.id]]" class="item pad">
-                                        <label>[[item.title]]</label> 
-                                        <label>(<span>[[item.id]]</span>)</label>
-                                    </paper-item>
-                                </template>
-                            </paper-listbox>
-                        </paper-dropdown-menu>
-                        <!---->
-
-                        <paper-input class="bottom title" label="Title"></paper-input>
-                    </div>
-                    <!--</paper-card>-->
-                </iron-pages>
-            </div>
-        </paper-card>
-        <br />
-        <!--        <paper-card heading="Edit content">
-                    <div class="card-content">
-                        <template is="dom-if" if$="{{isEmpty()}}">
-                                  <div class="header">
-                                <paper-material elevation="3" id="plutonium-cm-actions">
-                                    <plutonium-cm-field-fabs name$='{{name}}' dialog-id$='{{dialogId}}' ></plutonium-cm-field-fabs>
-                                </paper-material>
-                            </div>
+                            </plutonium-cm-field>
+                            <br />
                         </template>
-        
-                        <content id="cm">
-        
-                        </content>
-        
-                        <paper-listbox selected="0">
-                            <template is="dom-repeat" items="{{contentModel.sections}}" as="section">
-                                <plutonium-cm-field 
-                                    id="{{computeItemId(section)}}" 
-                                    model="{{section}}" 
-                                    dialog-id="{{computeDialogId(section)}}">
-                                </plutonium-cm-field>
-                                <br />
+                    </paper-listbox>
+                </div>
+
+                <div class="card-content">
+                    <paper-fab icon="send" class="horizontal end-justified layout"></paper-fab>    
+
+
+                    <paper-dropdown-menu label="Parent">
+                        <!--<paper-menu class="layout flex">-->
+                        <paper-listbox id="parentCandidatesList"
+                                       class="dropdown-content"
+                                       attr-for-selected="{{attrForSelected}}"
+                                       multi
+                                       label="Parent"
+                                       items="[[parentCandidates]]"
+                                       as="parent"
+                                       selected="{{selectedParent}}">
+                            <template is="dom-repeat" items="[[parentCandidates]]">
+
+                                <paper-item id="[[item.id]]" class="item pad">
+                                    <label>[[item.title]]</label> 
+                                    <label>(<span>[[item.id]]</span>)</label>
+                                </paper-item>
                             </template>
                         </paper-listbox>
-                    </div>
-                </paper-card>-->
+                    </paper-dropdown-menu>
+                    <!---->
 
-        <content></content>
-    </template>
+                    <paper-input class="bottom title" label="Title"></paper-input>
+                </div>
+                <!--</paper-card>-->
+            </iron-pages>
+        </div>
+    </paper-card>
+    <br />
+    <!--        <paper-card heading="Edit content">
+                <div class="card-content">
+                    <template is="dom-if" if$="{{isEmpty()}}">
+                              <div class="header">
+                            <paper-material elevation="3" id="plutonium-cm-actions">
+                                <plutonium-cm-field-fabs name$='{{name}}' dialog-id$='{{dialogId}}' ></plutonium-cm-field-fabs>
+                            </paper-material>
+                        </div>
+                    </template>
+    
+                    <content id="cm">
+    
+                    </content>
+    
+                    <paper-listbox selected="0">
+                        <template is="dom-repeat" items="{{contentModel.sections}}" as="section">
+                            <plutonium-cm-field 
+                                id="{{computeItemId(section)}}" 
+                                model="{{section}}" 
+                                dialog-id="{{computeDialogId(section)}}">
+                            </plutonium-cm-field>
+                            <br />
+                        </template>
+                    </paper-listbox>
+                </div>
+            </paper-card>-->
 
-    <script>
-        Polymer({
-            is: 'plutonium-cm-form',
-            properties: {
-                selectedMetaAction: {
-                    type: Number,
-                    notify: true,
-                    value: 1
-                },
-                parentCandidates: {
-                    type: Array,
-                    value: [
-                        {id: '1', title: 'Root'},
-                        {id: '2', title: 'Contents for demo'},
-                        {id: '3', title: 'Contents for saling'}
-                    ]
-                },
-                /**
-                 * Data-model of th form.
-                 */
-                contentModel: {
-                    type: Object,
-                    notify: true
-                },
-                contacts: {
-                    type: Object,
-                    notify: true
-                },
-                selectedContactIds: {
-                    type: Object,
-                    notify: true,
-                    value: []
-                },
-                editors: {
-                    type: Object,
-                    notify: true
-                }
+    <content></content>
+</template>
+
+<script>
+    Polymer({
+        is: 'plutonium-cm-form',
+        properties: {
+            selectedSection: {
+                type: Number,
+                notify: true,
+                value: 0
             },
-            listeners: {
-                'create': 'onCreateSectionInParent',
-                'remove': 'onRemoveSectionInParent',
-                'iron-items-changed': 'onRefresh',
-                'moveupsection': 'onMoveUpSectionInParent',
-                'movedownsection': 'onMoveDownSectionInParent'
+            selectedMetaAction: {
+                type: Number,
+                notify: true,
+                value: 1
             },
-            observers: [
-                'updateFields(editors, contentModel)',
-                'renderContent(contentModel)',
-                'observeSections(contentModel.sections.splices)'
-            ],
-            // Element Lifecycle
-            ready: function () {
-                // `ready` is called after all elements have been configured, but
-                // propagates bottom-up. This element's children are ready, but parents
-                // are not.
-                //
-                // This is the point where you should make modifications to the DOM (when
-                // necessary), or kick off any processes the element wants to perform.
-                console.log("Form is ready, initialize classification ...");
+            parentCandidates: {
+                type: Array,
+                value: [
+                    {id: '1', title: 'Root'},
+                    {id: '2', title: 'Contents for demo'},
+                    {id: '3', title: 'Contents for saling'}
+                ]
+            },
+            /**
+             * Data-model of th form.
+             */
+            contentModel: {
+                type: Object,
+                notify: true
+            },
+            contacts: {
+                type: Object,
+                notify: true
+            },
+            selectedContactIds: {
+                type: Object,
+                notify: true,
+                value: []
+            },
+            editors: {
+                type: Object,
+                notify: true
+            }
+        },
+        listeners: {
+            'create': 'onCreateSectionInParent',
+            'remove': 'onRemoveSectionInParent',
+            'edit': 'onOpenEditorInParent',
+            'iron-items-changed': 'onRefresh',
+            'iron-overlay-closed': 'onApply',
+            'moveupsection': 'onMoveUpSectionInParent',
+            'movedownsection': 'onMoveDownSectionInParent'
+        },
+        observers: [
+            'updateFields(editors, contentModel)',
+            'renderContent(contentModel)',
+            'observeSections(contentModel.sections.splices)'
+        ],
+        // Element Lifecycle
+        ready: function () {
+            // `ready` is called after all elements have been configured, but
+            // propagates bottom-up. This element's children are ready, but parents
+            // are not.
+            //
+            // This is the point where you should make modifications to the DOM (when
+            // necessary), or kick off any processes the element wants to perform.
+            console.log("Form is ready, initialize classification ...");
 
 
-                //                this.renderContent(this.contentModel);
-            },
-            attached: function () {
-                // `attached` fires once the element and its parents have been inserted
-                // into a document.
-                //
-                // This is a good place to perform any work related to your element's
-                // visual state or active behavior (measuring sizes, beginning animations,
-                // loading resources, etc).
-            },
-            detached: function () {
-                // The analog to `attached`, `detached` fires when the element has been
-                // removed from a document.
-                //
-                // Use this to clean up anything you did in `attached`.
-            },
-            // Element Behavior
-            isEmpty: function () {
-                return this.contentModel === undefined
-                        || this.contentModel === null
-                        || this.contentModel.sections.length === 0;
-            },
-            computeItemId: function (item) {
-                if (item.name === undefined || item.name === null) {
-                    var id = 'section' + this.contentModel.sections.indexOf(item);
-                    console.log('Compute item id=' + id);
-                    return id;
-                } else {
-                    return item.name;
-                }
-            },
-            computeDialogId: function (item) {
-                console.log('------------------------------------------' + JSON.stringify(this.editors) + '||||||' + this.editors[item.type]);
-                return this.editors[item.type];
-            },
-            updateFields: function (editors, contentModel) {
-                console.log('plutonium-cm-form#' + this.id + ': update fields');
+            //                this.renderContent(this.contentModel);
+        },
+        attached: function () {
+            // `attached` fires once the element and its parents have been inserted
+            // into a document.
+            //
+            // This is a good place to perform any work related to your element's
+            // visual state or active behavior (measuring sizes, beginning animations,
+            // loading resources, etc).
+        },
+        detached: function () {
+            // The analog to `attached`, `detached` fires when the element has been
+            // removed from a document.
+            //
+            // Use this to clean up anything you did in `attached`.
+        },
+        // Element Behavior
+        isEmpty: function () {
+            return this.contentModel === undefined
+                    || this.contentModel === null
+                    || this.contentModel.sections.length === 0;
+        },
+        computeItemId: function (item) {
+            if (item.name === undefined || item.name === null) {
+                var id = 'section' + this.contentModel.sections.indexOf(item);
+                console.log('Compute item id=' + id);
+                return id;
+            } else {
+                return item.name;
+            }
+        },
+        computeDialogId: function (item) {
+            console.log('------------------------------------------' + JSON.stringify(this.editors) + '||||||' + this.editors[item.type]);
+            return this.editors[item.type];
+        },
+        updateFields: function (editors, contentModel) {
+            console.log('plutonium-cm-form#' + this.id + ': update fields');
 //                this.fire('render', {
 //                    editors: this.editors
 //                });
-                contentModel.sections.forEach(function (item, index) {
-                    var element = Polymer.dom(this).querySelector(this.computeItemId(item));
+            contentModel.sections.forEach(function (item, index) {
+                var element = Polymer.dom(this).querySelector(this.computeItemId(item));
 //                    Polymer.dom(element).setAttribute('dialog-id', editors[item.type]);
-                }, this);
-            },
-            renderContent: function (contentModel) {
-                //            console.log('Render content for content-form(' + this.$.id + '): ');
-                //            contentModel.sections.forEach(function (property, index) {
-                //                var selector = property.type + '[name="' + property.key + '"]';
-                //                var element = Polymer.dom(this).querySelector(selector);
-                //                if (element === undefined || element === null) {
-                //                    element = document.createElement(property.type);
-                //                    Polymer.dom(element).setAttribute('name', property.key);
-                //                    Polymer.dom(element).setAttribute('title', 'Properties of ' + property.key);
-                //                    Polymer.dom(element).setAttribute('data', property.data);
-                //
-                //                    var conteinerItem = Polymer.dom(this.root).querySelector('#section' + index);
-                //                    if (conteinerItem !== undefined && conteinerItem !== null) {
-                //                        console.log('\t- Section #' + index + ': ' + JSON.stringify(property));
-                //                        conteinerItem.appendChild(element);
-                //                    }
-                //
-                //                }
-                //
-                //            }, this);
-                //            Polymer.dom.flush();
-                //            Polymer.updateStyles();
-            },
-            onRefresh: function (e) {
-                this.renderContent(this.contentModel);
-            },
-            observeSections: function (splices) {
-                console.log('Observe content sections.');
+            }, this);
+        },
+        renderContent: function (contentModel) {
+            //            console.log('Render content for content-form(' + this.$.id + '): ');
+            //            contentModel.sections.forEach(function (property, index) {
+            //                var selector = property.type + '[name="' + property.key + '"]';
+            //                var element = Polymer.dom(this).querySelector(selector);
+            //                if (element === undefined || element === null) {
+            //                    element = document.createElement(property.type);
+            //                    Polymer.dom(element).setAttribute('name', property.key);
+            //                    Polymer.dom(element).setAttribute('title', 'Properties of ' + property.key);
+            //                    Polymer.dom(element).setAttribute('data', property.data);
+            //
+            //                    var conteinerItem = Polymer.dom(this.root).querySelector('#section' + index);
+            //                    if (conteinerItem !== undefined && conteinerItem !== null) {
+            //                        console.log('\t- Section #' + index + ': ' + JSON.stringify(property));
+            //                        conteinerItem.appendChild(element);
+            //                    }
+            //
+            //                }
+            //
+            //            }, this);
+            //            Polymer.dom.flush();
+            //            Polymer.updateStyles();
+        },
+        onRefresh: function (e) {
+            this.renderContent(this.contentModel);
+        },
+        observeSections: function (splices) {
+            console.log('Observe content sections.');
 
-            },
-            onCreateSectionInParent: function (e) {
-                console.log('Create new ' + JSON.stringify(e.detail.type) + ' section ' + JSON.stringify(e.detail.type));
-                this.push('contentModel.sections', {
-                    type: e.detail.type,
-                    name: 'section' + this.contentModel.sections.length,
-                    title: '',
-                    data: ''
-                });
+        },
+        onCreateSectionInParent: function (e) {
+            console.log('Create new ' + JSON.stringify(e.detail.type) + ' section ' + JSON.stringify(e.detail.type));
+            this.push('contentModel.sections', {
+                type: e.detail.type,
+                name: 'section' + this.contentModel.sections.length,
+                title: '',
+                data: ''
+            });
 //                this.contentModel
 //                var el = document.createElement(e.detail.type);
 //                el.setAttribute('name', "property-" + this.contentModel.sections.length);
 //                el.name = e.detail.key;
 //                Polymer.dom(this.$.cm).appendChild(el);
 //                Polymer.dom.flush()
-            },
-            onRemoveSectionInParent: function (e) {
-                var index = this.indexOfSection(e.detail.name);
-                console.log('Remove section ' + e.detail.name + ' from index ' + index);
-                this.splice('contentModel.sections', index, 1);
-            },
-            onMoveUpSectionInParent: function (e) {
-                var index = this.indexOfSection(e.detail.name);
-                var s = [];
-                if (index - 1 >= 0) {
-                    s = this.splice('contentModel.sections', index - 1, this.contentModel.sections.length - index + 1);
-                    var first = s[0];
-                    var second = s[1];
-                    var tail = s.filter(function (value, index, arr) {
-                        return index > 1;
-                    }, this);
-                    this.push('contentModel.sections', second, first);
-                    tail.forEach(function (value, index, arr) {
-                        this.push('contentModel.sections', value);
-                    }, this);
-                } else {
-                    s = this.splice('contentModel.sections', 0, 1);
-                    this.push('contentModel.sections', s[0]);
-                }
-            },
-            onMoveDownSectionInParent: function (e) {
-                var index = this.indexOfSection(e.detail.name);
-                var s = [];
-                if (index < this.contentModel.sections.length - 1) {
-                    s = this.splice('contentModel.sections', index, this.contentModel.sections.length - index);
-                    var first = s[0];
-                    var second = s[1];
-                    var tail = s.filter(function (value, index, arr) {
-                        return index > 1;
-                    }, this);
-                    this.push('contentModel.sections', second, first);
-                    tail.forEach(function (value, index, arr) {
-                        this.push('contentModel.sections', value);
-                    }, this);
-                } else {
-                    s = this.splice('contentModel.sections', 0, this.contentModel.sections.length - 1);
-                    s.forEach(function (value, index, arr) {
-                        this.push('contentModel.sections', value);
-                    }, this);
-                }
-            },
-            indexOfSection: function (name) {
-                var s = this.contentModel.sections;
-                var index = s.indexOf(
-                        s.filter(function (section) {
-                            return (section.name === name);
-                        }, this)[0]);
-                return index;
+        },
+        onRemoveSectionInParent: function (e) {
+            var index = this.indexOfSection(e.detail.name);
+            console.log('Remove section ' + e.detail.name + ' from index ' + index);
+            this.splice('contentModel.sections', index, 1);
+        },
+        onOpenEditorInParent: function (e) {
+            console.log('Open field[' + e.detail.name + '] editor in a dialog ' + e.detail.dialogId + ' with model: ' + JSON.stringify(e.detail.section) + '.');
+
+//                this.$$(e.detail.dialogId).setAttribute('modal', true);
+//                Polymer.dom(this.$$(e.detail.dialogId)).querySelector('[name="title"]').setAttribute('value', e.detail.section.title);
+            document.querySelector('#' + e.detail.dialogId + ' [name="title"]').setAttribute('value', e.detail.section.title);
+//                Polymer.dom(this.$$(e.detail.dialogId)).querySelector('[name="data"]').setAttribute('value', e.detail.section.data);
+            document.querySelector('#' + e.detail.dialogId + ' [name="data"]').setAttribute('value', e.detail.section.data);
+            document.querySelector('#' + e.detail.dialogId + ' [name="name"]').setAttribute('value', e.detail.name);
+            document.querySelector('#' + e.detail.dialogId).open();
+        },
+        onApply: function (e, r) {
+            if (r.confirmed) {
+                var title = document.querySelector('#' + e.target.id + ' [name="title"] ').value;
+                var data = document.querySelector('#' + e.target.id + ' [name="data"] ').value;
+//                var name = document.querySelector('#' + e.target.id + ' [name="name"] ').value;
+                var oldContent = this.contentModel.sections[this.selectedSection / 2];
+
+                document.querySelector('plutonium-cm-field[name="' + oldContent.name + '"] ').model = {
+                    type: oldContent.type,
+                    name: oldContent.name,
+                    title: title,
+                    data: data
+                };
+                var newContent = this.contentModel.sections[this.selectedSection / 2];
+                console.log('Change field model from ' + JSON.stringify(oldContent) + ' to ' + JSON.stringify(newContent));
+            } else {
+                console.log('Cancel edit.');
             }
-        });
-    </script>
+        },
+        onMoveUpSectionInParent: function (e) {
+            var index = this.indexOfSection(e.detail.name);
+            var s = [];
+            if (index - 1 >= 0) {
+                s = this.splice('contentModel.sections', index - 1, this.contentModel.sections.length - index + 1);
+                var first = s[0];
+                var second = s[1];
+                var tail = s.filter(function (value, index, arr) {
+                    return index > 1;
+                }, this);
+                this.push('contentModel.sections', second, first);
+                tail.forEach(function (value, index, arr) {
+                    this.push('contentModel.sections', value);
+                }, this);
+            } else {
+                s = this.splice('contentModel.sections', 0, 1);
+                this.push('contentModel.sections', s[0]);
+            }
+        },
+        onMoveDownSectionInParent: function (e) {
+            var index = this.indexOfSection(e.detail.name);
+            var s = [];
+            if (index < this.contentModel.sections.length - 1) {
+                s = this.splice('contentModel.sections', index, this.contentModel.sections.length - index);
+                var first = s[0];
+                var second = s[1];
+                var tail = s.filter(function (value, index, arr) {
+                    return index > 1;
+                }, this);
+                this.push('contentModel.sections', second, first);
+                tail.forEach(function (value, index, arr) {
+                    this.push('contentModel.sections', value);
+                }, this);
+            } else {
+                s = this.splice('contentModel.sections', 0, this.contentModel.sections.length - 1);
+                s.forEach(function (value, index, arr) {
+                    this.push('contentModel.sections', value);
+                }, this);
+            }
+        },
+        indexOfSection: function (name) {
+            var s = this.contentModel.sections;
+            var index = s.indexOf(
+                    s.filter(function (section) {
+                        return (section.name === name);
+                    }, this)[0]);
+            return index;
+        }
+    });
+</script>
 </dom-module>

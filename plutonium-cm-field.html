@@ -107,7 +107,7 @@ Example:
         <template is="dom-if" if="{{!sectionDisplay}}">
             <paper-material elevation="2">
                 <div class="header">
-                    <label label="Title" class="title-text">[[title]]</label>
+                    <label label="Title" class="title-text">{{title}}</label>
                     <!--<plutonium-cm-field-fabs id="actionContainer" name$='{{name}}' dialog-id$='{{dialogId}}' ></plutonium-cm-field-fabs>-->
                     <div id="actionContainer">
                         <paper-icon-button on-click="onMoveUpSection" icon="expand-less" raised></paper-icon-button>
@@ -149,7 +149,8 @@ Example:
                     },
                     model: {
                         type: Object,
-                        notify: true
+                        notify: true,
+                        observer: 'observeModel'
                     }
                 },
                 listeners: {
@@ -157,7 +158,9 @@ Example:
                     'render': 'onRender'
                 },
                 // Element Lifecycle
-
+                observeModel: function(rr) {
+                    console.log('OOOOOOOOOOOOOOOOOOOOOOOOOOOOOO---' + JSON.stringify(rr));
+                },
                 ready: function () {
                     console.log('plutonium-cm-field[' + this.id + '] is ready.');
                     console.log('\tstate: ' + (this.inlineEditor === true ? 'inline' : 'dialog') + ', ' + (this._edited === true ? 'editor' : 'preview'));
