@@ -51,10 +51,10 @@ Example:
                 @apply(--layout-vertical);
                 @apply(--layout-flex);
             }
-/*            .cm-fab {
-                @apply(--layout-vertical);
-                @apply(--layout-centered);
-            }*/
+            /*            .cm-fab {
+                            @apply(--layout-vertical);
+                            @apply(--layout-centered);
+                        }*/
 
             #plutonium-cm-actions {
                 display: var(--plutonium-cm-actions-display);
@@ -69,7 +69,7 @@ Example:
 
             <!--<div>-->
             <!--<paper-card elevation="1" heading$="{{title}}">-->
-                        <iron-image src="{{data}}"></iron-image>
+            <iron-image src="{{data}}"></iron-image>
             <!--</paper-card>-->
 
             <!--            <paper-material elevation="2" id="plutonium-cm-actions">
@@ -78,7 +78,9 @@ Example:
             <!--</div>-->
         </template>
         <template is="dom-if" if="{{sectionDisplay}}">
-            <iron-image src="{{data}}"></iron-image>
+            <paper-card heading="{{title}}">
+                <iron-image class="card-content" src="{{data}}"></iron-image>
+            </paper-card>
         </template>
     </template>
 
@@ -130,26 +132,26 @@ Example:
                 },
                 // Element Behavior
 
-    //            removeSection: function () {
-    //                console.log('Remove field[' + this.key + ']');
-    //            },
-    //            showEditor: function (event) {
-    //                this._edited = true;
-    //                if (this.inlineEditor === false) {
-    //                    console.log('Open properties of content in a dialog.');
-    //                    document.getElementById(this.dialogId).open();
-    //                } else {
-    //                    console.log('Show properties of content inline.');
-    //                }
-    //            },
-    //            applyModel: function () {
-    //                this._edited = false;
-    //                this.fire('applyModel', {
-    //                    key: this.key,
-    //                    model: this.data
-    //                });
-    //                console.log('Show preview.');
-    //            },
+                //            removeSection: function () {
+                //                console.log('Remove field[' + this.key + ']');
+                //            },
+                //            showEditor: function (event) {
+                //                this._edited = true;
+                //                if (this.inlineEditor === false) {
+                //                    console.log('Open properties of content in a dialog.');
+                //                    document.getElementById(this.dialogId).open();
+                //                } else {
+                //                    console.log('Show properties of content inline.');
+                //                }
+                //            },
+                //            applyModel: function () {
+                //                this._edited = false;
+                //                this.fire('applyModel', {
+                //                    key: this.key,
+                //                    model: this.data
+                //                });
+                //                console.log('Show preview.');
+                //            },
                 observers: [
                     '_extractId(url)',
                     '_computeUrl(data)'

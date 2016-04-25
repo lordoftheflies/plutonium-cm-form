@@ -59,7 +59,7 @@ Example:
                 display: inline-block;
             }
             :host paper-card {
-                @apply(--layout-horizontal);
+                /*@apply(--layout-horizontal);*/
                 @apply(--layout-flex);
             }
 
@@ -79,7 +79,7 @@ Example:
 
             <!--<div on-mouseover='onHovered' on-mouseout='onUnhovered'>-->
             <!--<div>-->
-            
+
 
             <!--<paper-card elevation="1" heading$="{{title}}">-->
             <paper-textarea label="Text">{{data}}</paper-textarea>
@@ -92,7 +92,11 @@ Example:
 
         </template>
         <template is="dom-if" if="{{sectionDisplay}}">
-            <a href$="{{data}}">{{title}}</a>
+            <paper-card heading="{{title}}">
+                <div class="card-content">
+                    <a href$="{{data}}">{{title}}</a>
+                </div>
+            </paper-card>
         </template>
     </template>
 

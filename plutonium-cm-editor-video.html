@@ -79,7 +79,7 @@ Example:
                 @apply(--layout-horizontal);
             }
 
-            .header .title-text {
+            .title-text {
                 @apply(--layout-flex);
                 padding: 16px;
                 font-size: 24px;
@@ -103,25 +103,25 @@ Example:
         <template is="dom-if" if="{{!sectionDisplay}}">
             <!--<div on-mouseover='onHovered' on-mouseout='onUnhovered'>-->
             <!--<div>-->
-            
-
-<!--            <paper-material elevation="2">
-                <div class="header">
-                    <label class="title-text">[[title]]</label>
-                    <paper-material elevation="3" id="plutonium-cm-actions">
-                        <plutonium-cm-field-fabs name$='{{name}}' dialog-id$='{{dialogId}}' ></plutonium-cm-field-fabs>
-                    </paper-material>
-                </div>-->
 
 
-                <google-youtube
-                    video-id="{{data}}"
-                    height="270px"
-                    width="480px"
-                    rel="0"
-                    start="5"
-                    autoplay="0">
-                </google-youtube>
+            <!--            <paper-material elevation="2">
+                            <div class="header">
+                                <label class="title-text">[[title]]</label>
+                                <paper-material elevation="3" id="plutonium-cm-actions">
+                                    <plutonium-cm-field-fabs name$='{{name}}' dialog-id$='{{dialogId}}' ></plutonium-cm-field-fabs>
+                                </paper-material>
+                            </div>-->
+
+
+            <google-youtube
+                video-id="{{data}}"
+                height="270px"
+                width="480px"
+                rel="0"
+                start="5"
+                autoplay="0">
+            </google-youtube>
             <!--</paper-material>-->
             <!--<br />-->
 
@@ -130,14 +130,18 @@ Example:
 
         </template>
         <template is="dom-if" if="{{sectionDisplay}}">
-            <google-youtube
-                video-id$='{{data}}'
-                height="270px"
-                width="480px"
-                rel="0"
-                start="5"
-                autoplay="0">
-        </google-youtube>
+            <paper-card heading="{{title}}">
+                <google-youtube
+                    class="card-content"
+                    video-id$='{{data}}'
+                    height="270px"
+                    width="480px"
+                    rel="0"
+                    start="5"
+                    autoplay="0">
+            </google-youtube>
+        </paper-card>
+
     </template>
 
 </template>

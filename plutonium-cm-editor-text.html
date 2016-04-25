@@ -49,9 +49,9 @@ Example:
             }
 
             :host paper-card {
-                @apply(--layout-horizontal);
-                @apply(--layout-vertical);
-                @apply(--horizontal-end-justified);
+                display: block;
+                @apply(--layout-flex);
+                /*@apply(--horizontal-end-justified);*/
             }
 
             /*            .cm-fab {
@@ -77,7 +77,9 @@ Example:
             <p>{{data}}</p>
         </template>
         <template is="dom-if" if="{{sectionDisplay}}">
-            <p>{{data}}</p>
+            <paper-card heading="{{title}}">
+                <p class="card-content">{{data}}</p>
+            </paper-card>
         </template>
 
 

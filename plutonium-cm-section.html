@@ -99,8 +99,9 @@ Example:
                     var element = Polymer.dom(this).querySelector(selector);
                     if (element === undefined || element === null) {
                         element = document.createElement(property.type);
-                        Polymer.dom(element).setAttribute('name', property.key);
-                        Polymer.dom(element).setAttribute('title', 'Properties of ' + property.key);
+                        console.log('Create element ' + property.type + ' with model ' + JSON.stringify(property));
+                        Polymer.dom(element).setAttribute('name', property.name);
+                        Polymer.dom(element).setAttribute('title', property.title);
 //                        Polymer.dom(element).setAttribute('actions-display', true);
                         Polymer.dom(element).setAttribute('section-display', true);
                         Polymer.dom(element).setAttribute('data', property.data);
