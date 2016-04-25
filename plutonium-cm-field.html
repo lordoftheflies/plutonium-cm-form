@@ -14,6 +14,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../iron-icons/editor-icons.html">
+
+
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="plutonium-cm-behavior.html">
@@ -110,6 +113,15 @@ Example:
                     <label label="Title" class="title-text">{{title}}</label>
                     <!--<plutonium-cm-field-fabs id="actionContainer" name$='{{name}}' dialog-id$='{{dialogId}}' ></plutonium-cm-field-fabs>-->
                     <div id="actionContainer">
+
+
+                        <paper-icon-button on-click="onDecreaseFontSize" icon="unfold-less" raised></paper-icon-button>
+                        <paper-icon-button on-click="onInreaseFontSize" icon="unfold-more" raised></paper-icon-button>
+
+                        <paper-icon-button on-click="onAlignLeft" icon="editor:format-align-left" raised></paper-icon-button>
+                        <paper-icon-button on-click="onAlignCenter" icon="editor:format-align-center" raised></paper-icon-button>
+                        <paper-icon-button on-click="onAlignRight" icon="editor:format-align-right" raised></paper-icon-button>
+
                         <paper-icon-button on-click="onMoveUpSection" icon="expand-less" raised></paper-icon-button>
                         <paper-icon-button on-click="onAddSection" icon="add-circle" title="Embedd video to the message content."></paper-icon-button>
                         <paper-icon-button on-click="onEmbedVideo" icon="theaters" title="Embedd video to the message content."></paper-icon-button>
@@ -158,7 +170,7 @@ Example:
                     'render': 'onRender'
                 },
                 // Element Lifecycle
-                observeModel: function(rr) {
+                observeModel: function (rr) {
                     console.log('OOOOOOOOOOOOOOOOOOOOOOOOOOOOOO---' + JSON.stringify(rr));
                 },
                 ready: function () {
@@ -215,25 +227,25 @@ Example:
                     '_extractId(url)',
                     '_computeUrl(data)',
                     'computeTitle(model)',
-                    'renderByModel(model, id, dialogId)'
+                    'renderByModel(model, name, dialogId)'
                 ],
                 computeTitle: function (model) {
                     this.title = model.title;
                 },
                 renderByModel: function (model, id, dialogId) {
-                    var selector = model.type + '[name="' + model.name + '"]';
+                    var selector = model.type;
                     var element = Polymer.dom(this).querySelector(selector);
                     console.log('\t- Section #' + id + '-#' + this.dialogId + ': ' + JSON.stringify(this.model));
 
                     if (element === undefined || element === null) {
                         element = document.createElement(model.type);
-                        Polymer.dom(element).setAttribute('name', model.key);
-                        Polymer.dom(element).setAttribute('title', model.key);
-                        Polymer.dom(element).setAttribute('data', model.data);
-                        Polymer.dom(element).setAttribute('dialog-id', dialogId);
-
                         Polymer.dom(this).appendChild(element);
                     }
+
+                    Polymer.dom(element).setAttribute('name', model.name);
+                    Polymer.dom(element).setAttribute('title', model.title);
+                    Polymer.dom(element).setAttribute('data', model.data);
+                    Polymer.dom(element).setAttribute('dialog-id', dialogId);
                 },
                 onRender: function () {
 
@@ -257,6 +269,21 @@ Example:
                     console.log('\tname: ' + this.name);
                     console.log('\ttitle: ' + this.title);
                     console.log('\tdata: ' + this.data);
+                },
+                onDecreaseFontSize: function (e) {
+                    console.log('Decrease font size.');
+                },
+                onInreaseFontSize: function (e) {
+                    console.log('Increase font size.');
+                },
+                onAlignLeft: function (e) {
+                    console.log('Change align to left.');
+                },
+                onAlignCenter: function (e) {
+                    console.log('Change align to center.');
+                },
+                onAlignRight: function (e) {
+                    console.log('Change align to right.');
                 }
             });
         })();
