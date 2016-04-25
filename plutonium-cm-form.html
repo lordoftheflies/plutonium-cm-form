@@ -122,7 +122,14 @@ Example:
 
                     <div class="card-content">
                         <template is="dom-if" if$="{{isEmpty()}}">
-                                  <plutonium-cm-field-fabs class="end-justified" name$='{{name}}' dialog-id$='{{dialogId}}' ></plutonium-cm-field-fabs>
+
+                                  <paper-icon-button on-click="onAddSection" icon="add-circle" title="Embedd video to the message content."></paper-icon-button>
+                            <paper-icon-button on-click="onEmbedVideo" icon="theaters" title="Embedd video to the message content."></paper-icon-button>
+                            <paper-icon-button on-click="onEmbedImage" icon="perm-media" title="Embedd image to the message content."></paper-icon-button>
+                            <paper-icon-button on-click="onEmbedLink" icon="link" title="Embedd a link to another message to the message content."></paper-icon-button>
+
+
+                            <!--<plutonium-cm-field-fabs class="end-justified" name$='{{name}}' dialog-id$='{{dialogId}}' ></plutonium-cm-field-fabs>-->
                         </template>
 
                         <content id="cm">
@@ -443,6 +450,34 @@ Example:
                         return (section.name === name);
                     }, this)[0]);
             return index;
+        },
+        onAddSection: function () {
+            console.log('Add section after field[' + Polymer.dom(this).parentNode.parentNode.name + ']');
+            this.fire('create', {
+                name: this.name,
+                type: 'plutonium-cm-editor-text'
+            });
+        },
+        onEmbedVideo: function () {
+            console.log('Embed video to after field[' + this.name + ']');
+            this.fire('create', {
+                name: this.name,
+                type: 'plutonium-cm-editor-video'
+            });
+        },
+        onEmbedImage: function () {
+            console.log('Embed image to after field[' + this.name + ']');
+            this.fire('create', {
+                name: this.name,
+                type: 'plutonium-cm-editor-image'
+            });
+        },
+        onEmbedLink: function () {
+            console.log('Embed link to after field[' + this.name + ']');
+            this.fire('create', {
+                name: this.name,
+                type: 'plutonium-cm-editor-link'
+            });
         }
     });
 </script>
