@@ -454,14 +454,14 @@ Example:
         onAddSection: function () {
             console.log('Add section after field[' + Polymer.dom(this).parentNode.parentNode.name + ']');
             this.fire('create', {
-                name: this.name,
+                name: 'section' + this.contentModel.sections.length,
                 type: 'plutonium-cm-editor-text'
             });
         },
         onEmbedVideo: function () {
             console.log('Embed video to after field[' + this.name + ']');
             this.fire('create', {
-                name: this.name,
+                name: 'section' + this.contentModel.sections.length,
                 type: 'plutonium-cm-editor-video'
             });
         },
@@ -475,7 +475,7 @@ Example:
         onEmbedLink: function () {
             console.log('Embed link to after field[' + this.name + ']');
             this.fire('create', {
-                name: this.name,
+                name: 'section' + this.contentModel.sections.length,
                 type: 'plutonium-cm-editor-link'
             });
         }
