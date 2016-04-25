@@ -38,6 +38,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <plutonium-cm-form id="contentEditor" style="width: 100%"
                                contacts$="{{contacts}}"
                                content-model$="{{classification}}"
+                               parent-candidates='[ {"id": "1", "title": "Root"}, {"id": "2", "title": "Contents for demo"}, {"id": "3", "title": "Contents for saling"} ]'
                                editors='{ "plutonium-cm-editor-image": "imageEditorDialog", "plutonium-cm-editor-link": "linkEditorDialog", "plutonium-cm-editor-text": "textEditorDialog", "plutonium-cm-editor-video": "videoEditorDialog" }'>
 
                 <paper-dialog id="textEditorDialog" modal class="editor">
