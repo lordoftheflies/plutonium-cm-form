@@ -60,15 +60,26 @@ Example:
                 --plutonium-cm-field-display: inline-block;
             }
 
-            :host > div {
-                display: block;
-                @apply(--layout-horizontal);
-            }
+            /*            :host > div {
+                            display: block;
+                            @apply(--layout-horizontal);
+                        }*/
 
             :host > paper-material {
                 display: inline-block;
                 @apply(--layout-vertical);
                 background-color: white;
+            }
+
+            .paper-section {
+                @apply(--layout-vertical);
+            }
+
+            :host .paper-section .card-content {
+                padding: 16px;
+                position:relative;
+
+                @apply(--paper-card-content);
             }
 
             .header {
@@ -138,8 +149,13 @@ Example:
             </paper-material>
         </template>
         <template is="dom-if" if="{{sectionDisplay}}">
-            <div class="card-content">
-                <content></content>
+            <div class="paper-section">
+                <div class="header">
+                    <div class="title-text" hidden$="[[!title]]">[[title]]</div>
+                </div>
+                <div class="card-content">
+                    <content></content>
+                </div>
             </div>
         </template>
 
@@ -171,11 +187,9 @@ Example:
                 },
                 // Element Lifecycle
                 observeModel: function (rr) {
-                    console.log('OOOOOOOOOOOOOOOOOOOOOOOOOOOOOO---' + JSON.stringify(rr));
                 },
                 ready: function () {
                     console.log('plutonium-cm-field[' + this.id + '] is ready.');
-                    console.log('\tstate: ' + (this.inlineEditor === true ? 'inline' : 'dialog') + ', ' + (this._edited === true ? 'editor' : 'preview'));
                     // `ready` is called after all elements have been configured, but
                     // propagates bottom-up. This element's children are ready, but parents
                     // are not.
@@ -227,6 +241,7 @@ Example:
                     '_extractId(url)',
                     '_computeUrl(data)',
                     'computeTitle(model)',
+                    'renderByModel(model, name)',
                     'renderByModel(model, name, dialogId)'
                 ],
                 computeTitle: function (model) {
@@ -235,11 +250,13 @@ Example:
                 renderByModel: function (model, id, dialogId) {
                     var selector = model.type;
                     var element = Polymer.dom(this).querySelector(selector);
-                    console.log('\t- Section #' + id + '-#' + this.dialogId + ': ' + JSON.stringify(this.model));
 
                     if (element === undefined || element === null) {
                         element = document.createElement(model.type);
                         Polymer.dom(this).appendChild(element);
+                        console.log('---------------- Render new model.');
+                    } else {
+                        console.log('---------------- Render model.');
                     }
 
                     Polymer.dom(element).setAttribute('name', model.name);
@@ -252,11 +269,9 @@ Example:
                 },
                 _extractId: function (url) {
                     this.data = url.split('=')[1];
-                    console.log('Change url, new id is ' + this.data);
                 },
                 _computeUrl: function (id) {
                     this.url = 'https://www.youtube.com/watch?v=' + id;
-                    console.log('Change id, new url is ' + this.url);
                 },
                 onAccept: function () {
                     this._edited = false;
@@ -264,11 +279,7 @@ Example:
                         key: this.key,
                         model: this.data
                     });
-                    console.log('Show preview: ');
-                    console.log('\tdialogId: ' + this.dialogId);
-                    console.log('\tname: ' + this.name);
-                    console.log('\ttitle: ' + this.title);
-                    console.log('\tdata: ' + this.data);
+                    console.log('Show preview(dialogId=' + this.dialogId + ', name=' + this.name + ', title=' + this.title + ', data=' + this.data + ')');
                 },
                 onDecreaseFontSize: function (e) {
                     console.log('Decrease font size.');

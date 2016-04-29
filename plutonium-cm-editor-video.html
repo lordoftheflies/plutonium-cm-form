@@ -165,8 +165,7 @@ Example:
             // Element Lifecycle
 
             ready: function () {
-                console.log('plutonium-cm-editor-video[' + this.key + '] is ready.');
-                console.log('\tstate: ' + (this.inlineEditor === true ? 'inline' : 'dialog') + ', ' + (this._edited === true ? 'editor' : 'preview'));
+                console.log('plutonium-cm-editor-video[' + this.name + '] is ready.');
                 // `ready` is called after all elements have been configured, but
                 // propagates bottom-up. This element's children are ready, but parents
                 // are not.
@@ -175,7 +174,7 @@ Example:
                 // necessary), or kick off any processes the element wants to perform.
             },
             attached: function () {
-                console.log('plutonium-cm-editor-video[' + this.key + '] is attached.');
+                console.log('plutonium-cm-editor-video[' + this.name + '] is attached.');
 
                 // `attached` fires once the element and its parents have been inserted
                 // into a document.
@@ -186,7 +185,7 @@ Example:
 
             },
             detached: function () {
-                console.log('plutonium-cm-editor-video[] is detached.');
+                console.log('plutonium-cm-editor-video[' + this.name + '] is detached.');
                 // The analog to `attached`, `detached` fires when the element has been
                 // removed from a document.
                 //
@@ -220,11 +219,9 @@ Example:
             ],
             _extractId: function (url) {
                 this.data = url.split('=')[1];
-                console.log('Change url, new id is ' + this.data);
             },
             _computeUrl: function (id) {
                 this.url = 'https://www.youtube.com/watch?v=' + id;
-                console.log('Change id, new url is ' + this.url);
             },
             onAccept: function () {
                 this._edited = false;
@@ -233,13 +230,6 @@ Example:
                     model: this.data
                 });
                 console.log('Show preview: ');
-                console.log('\tdialogId: ' + this.dialogId);
-                console.log('\tname: ' + this.name);
-                console.log('\tname: ' + this.name);
-                console.log('\ttitle: ' + this.title);
-                console.log('\ttitle: ' + this.title);
-                console.log('\tdata: ' + this.data);
-                console.log('\tdata: ' + this.data);
             }
         });
     })();

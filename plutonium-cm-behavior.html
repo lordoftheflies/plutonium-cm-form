@@ -54,15 +54,8 @@
 //        },
         ready: function () {
             this.customStyle['--plutonium-cm-field-display'] = 'inline-block';
-            console.log('PLUTONIUM-CM-FAB ---------------');
-            console.log('\tDialog id: ' + this.dialogId);
-            console.log('\tName: ' + this.name);
-            console.log('\tInline: ' + this.inlineEditor);
-            console.log('--------------------------------');
-            console.log('plutonium-field[' + this.name + '] is ready.');
-            console.log('\tstate: ' + (this.inlineEditor === true ? 'inline' : 'dialog') + ', ' + (this._edited === true ? 'editor' : 'preview'));
-    
-    },
+
+        },
         onRemoveSection: function () {
             console.log('Remove field[' + this.name + ']');
             this.fire('remove', {
@@ -74,7 +67,7 @@
 //            this.data = model;
             this.fire('edit', {
                 name: this.name,
-                section : this.model,
+                section: this.model,
                 dialogId: this.dialogId
             })
         },
@@ -101,7 +94,7 @@
             this.updateStyles();
         },
         onAddSection: function () {
-            console.log('Add section after field[' + Polymer.dom(this).parentNode.parentNode.name + ']');
+            console.log('Add section after field[' + this.name + ']');
             this.fire('create', {
                 name: this.name,
                 type: 'plutonium-cm-editor-text'

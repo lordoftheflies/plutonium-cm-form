@@ -337,14 +337,12 @@ Example:
         computeItemId: function (item) {
             if (item.name === undefined || item.name === null) {
                 var id = 'section' + this.contentModel.sections.indexOf(item);
-                console.log('Compute item id=' + id);
                 return id;
             } else {
                 return item.name;
             }
         },
         computeDialogId: function (item) {
-            console.log('------------------------------------------' + JSON.stringify(this.editors) + '||||||' + this.editors[item.type]);
             return this.editors[item.type];
         },
         updateFields: function (editors, contentModel) {

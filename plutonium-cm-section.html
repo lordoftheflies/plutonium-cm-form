@@ -13,8 +13,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../paper-fab/paper-fab.html">
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-list/iron-list.html">
 <link rel="import" href="plutonium-cm-shared-styles.html">
 
+<link rel="import" href="plutonium-cm-field.html">
+<link rel="import" href="plutonium-cm-editor-text.html">
+<link rel="import" href="plutonium-cm-editor-image.html">
+<link rel="import" href="plutonium-cm-editor-link.html">
+<link rel="import" href="plutonium-cm-editor-video.html">
+<link rel="import" href="plutonium-cm-field.html">
+<link rel="import" href="plutonium-cm-shared-styles.html">
 <!--
 An element providing a solution to no problem in particular.
 
@@ -51,6 +59,17 @@ Example:
         </style>
         <!--<paper-material  class="horizontal-section">-->
         <content></content>
+
+        <paper-listbox id="assembled" selected="{{selectedSection}}">
+            <template is="dom-repeat" items="{{contentModel.sections}}" as="section">
+                <plutonium-cm-field 
+                    name$="{{section.name}}"
+                    model="{{section}}"
+                    section-display>
+                </plutonium-cm-field>
+                <br />
+            </template>
+        </paper-listbox>
         <!--</paper-material>-->
 
     </template>
@@ -98,24 +117,24 @@ Example:
             },
             renderContent: function (contentModel) {
 
-                this.contentModel.sections.forEach(function (property, index) {
-                    var selector = property.type + '[name="' + property.name + '"]';
-                    var element = Polymer.dom(this).querySelector(selector);
-                    if (element === undefined || element === null) {
-                        element = document.createElement(property.type);
-                        console.log('Create field ' + property.type + '[name=' + property.name + '] with model ' + JSON.stringify(property));
-                        Polymer.dom(element).setAttribute('name', property.name);
-                        Polymer.dom(element).setAttribute('title', property.title);
-//                        Polymer.dom(element).setAttribute('actions-display', true);
-                        Polymer.dom(element).setAttribute('section-display', true);
-                        Polymer.dom(element).setAttribute('data', property.data);
-                        Polymer.dom(this).appendChild(element);
-                    } else {
-                        console.log('Update field ' + property.type + '[name=' + property.name + '] with model ' + JSON.stringify(property));
-                    }
-
-                }, this);
-//                console.log('Render fields for: ' + JSON.stringify(this.model));
+//                this.contentModel.sections.forEach(function (property, index) {
+//                    var selector = property.type + '[name="' + property.name + '"]';
+//                    var element = Polymer.dom(this).querySelector(selector);
+//                    if (element === undefined || element === null) {
+//                        element = document.createElement(property.type);
+//                        console.log('Create field ' + property.type + '[name=' + property.name + '] with model ' + JSON.stringify(property));
+//                        Polymer.dom(element).setAttribute('name', property.name);
+//                        Polymer.dom(element).setAttribute('title', property.title);
+//                        //                        Polymer.dom(element).setAttribute('actions-display', true);
+//                        Polymer.dom(element).setAttribute('section-display', true);
+//                        Polymer.dom(element).setAttribute('data', property.data);
+//                        Polymer.dom(this).appendChild(element);
+//                    } else {
+//                        console.log('Update field ' + property.type + '[name=' + property.name + '] with model ' + JSON.stringify(property));
+//                    }
+//
+//                }, this);
+                //                console.log('Render fields for: ' + JSON.stringify(this.model));
             },
             observeSections: function (splices) {
                 console.log(this.is + ' onserve sections.');
