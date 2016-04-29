@@ -71,7 +71,7 @@ Example:
                 background-color: white;
             }
 
-            .paper-section {
+            .plutonium-section {
                 @apply(--layout-vertical);
             }
 
@@ -91,7 +91,7 @@ Example:
                 @apply(--layout-horizontal);
             }*/
 
-            .header .title-text {
+            .plutonium-header .plutonium-title {
                 /*@apply(--layout-flex);*/
                 /*padding: 16px;*/
                 font-size: 24px;
@@ -149,11 +149,11 @@ Example:
             </paper-material>
         </template>
         <template is="dom-if" if="{{sectionDisplay}}">
-            <div class="paper-section">
-                <div class="header">
-                    <div class="title-text" hidden$="[[!title]]">[[title]]</div>
+            <div class="plutonium-section">
+                <div class="plutonium-header">
+                    <div class="plutonium-title" hidden$="[[!title]]">[[title]]</div>
                 </div>
-                <div class="card-content">
+                <div class="plutonium-content">
                     <content></content>
                 </div>
             </div>

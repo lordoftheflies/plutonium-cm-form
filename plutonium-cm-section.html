@@ -48,14 +48,6 @@ Example:
                 display: block;
                 box-sizing: border-box;
             }
-
-            .author img {
-                display: block;
-                float: left;
-                margin-right: 5px;
-                max-height: 100px;
-                max-width: 100px;
-            }
         </style>
         <!--<paper-material  class="horizontal-section">-->
         <content></content>
@@ -63,9 +55,9 @@ Example:
         <paper-listbox id="assembled" selected="{{selectedSection}}">
             <template is="dom-repeat" items="{{contentModel.sections}}" as="section">
                 <plutonium-cm-field 
-                    name$="{{section.name}}"
-                    model="{{section}}"
-                    section-display>
+                    section-display="true"
+                    model$="{{section}}"
+                    name$="{{section.name}}">
                 </plutonium-cm-field>
                 <br />
             </template>

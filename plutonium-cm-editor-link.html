@@ -75,29 +75,12 @@ Example:
                         }*/
 
         </style>
-        <template is="dom-if" if="{{!sectionDisplay}}">
-
-            <!--<div on-mouseover='onHovered' on-mouseout='onUnhovered'>-->
-            <!--<div>-->
-
-
-            <!--<paper-card elevation="1" heading$="{{title}}">-->
-            <paper-textarea label="Text">{{data}}</paper-textarea>
-            <!--</paper-card>-->
-
-            <!--            <paper-material elevation="1" id="plutonium-cm-actions">
-                            <plutonium-cm-field-fabs name$='{{name}}' dialog-id$='{{dialogId}}'></plutonium-cm-field-fabs>
-                        </paper-material>-->
-            <!--</div>-->
-
-        </template>
-        <template is="dom-if" if="{{sectionDisplay}}">
-            <paper-card heading="{{title}}">
-                <div class="card-content">
-                    <a href$="{{data}}">{{title}}</a>
-                </div>
-            </paper-card>
-        </template>
+        <!--<template is="dom-if" if="{{!sectionDisplay}}">-->
+            <!--<paper-input label="Text">{{data}}</paper-input>-->
+        <!--</template>-->
+        <!--<template is="dom-if" if="{{sectionDisplay}}">-->
+            <a href$="{{data}}">{{title}}</a>
+        <!--</template>-->
     </template>
 
     <script>
