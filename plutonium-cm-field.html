@@ -75,21 +75,21 @@ Example:
                 @apply(--layout-vertical);
             }
 
-/*            :host .paper-section .card-content {
-                padding: 16px;
-                position:relative;
+            /*            :host .paper-section .card-content {
+                            padding: 16px;
+                            position:relative;
+            
+                            @apply(--paper-card-content);
+                        }*/
 
-                @apply(--paper-card-content);
-            }*/
-
-/*            .header {
-                position: relative;
-                border-top-left-radius: inherit;
-                border-top-right-radius: inherit;
-                overflow: hidden;
-                @apply(--paper-card-header);
-                @apply(--layout-horizontal);
-            }*/
+            /*            .header {
+                            position: relative;
+                            border-top-left-radius: inherit;
+                            border-top-right-radius: inherit;
+                            overflow: hidden;
+                            @apply(--paper-card-header);
+                            @apply(--layout-horizontal);
+                        }*/
 
             .plutonium-header .plutonium-title {
                 /*@apply(--layout-flex);*/
@@ -246,10 +246,19 @@ Example:
                 renderByModel: function (model, id, dialogId) {
                     var selector = model.type;
                     var element = Polymer.dom(this).querySelector(selector);
-
+                    console.log(this.is + ' render field ' + model.name + ': ' + JSON.stringify(model));
                     if (element === undefined || element === null) {
+                        Polymer.dom(parent).childNodes.forEach(function (current, index, arr) {
+                            console.log(this.is + ' remove child node: ' + JSON.stringify(index));
+                            Polymer.dom(this).removeChild(current);
+                        }, this);
+
+                        console.log(this.is + ' create child node: ' + selector);
+                            
                         element = document.createElement(model.type);
                         Polymer.dom(this).appendChild(element);
+                    } else {
+                        console.log(this.is + ' update child node: ' + selector);
                     }
 
                     Polymer.dom(element).setAttribute('name', model.name);
