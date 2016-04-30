@@ -250,9 +250,6 @@ Example:
                     if (element === undefined || element === null) {
                         element = document.createElement(model.type);
                         Polymer.dom(this).appendChild(element);
-                        console.log('---------------- Render new model.');
-                    } else {
-                        console.log('---------------- Render model.');
                     }
 
                     Polymer.dom(element).setAttribute('name', model.name);
