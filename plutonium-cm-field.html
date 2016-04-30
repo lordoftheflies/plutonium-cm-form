@@ -248,7 +248,7 @@ Example:
                     var element = Polymer.dom(this).querySelector(selector);
                     console.log(this.is + ' render field ' + model.name + ': ' + JSON.stringify(model));
                     if (element === undefined || element === null) {
-                        Polymer.dom(parent).childNodes.forEach(function (current, index, arr) {
+                        Polymer.dom(this).childNodes.forEach(function (current, index, arr) {
                             console.log(this.is + ' remove child node: ' + JSON.stringify(index));
                             Polymer.dom(this).removeChild(current);
                         }, this);
